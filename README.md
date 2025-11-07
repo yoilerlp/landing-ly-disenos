@@ -1,4 +1,4 @@
-# Astro Starter Kit: Basics
+# Fusion_tower_landing Repo
 
 ```sh
 npm create astro@latest -- --template basics
