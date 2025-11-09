@@ -1,4 +1,4 @@
-import { bannerEs, bannerEn } from '@/locales/banner';
+import { bannerEs, bannerEn } from '../locales/banner';
 
 export const localesText = {
   es: {

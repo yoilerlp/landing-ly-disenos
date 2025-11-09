@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
 
-import { ACCEPTED_LOCALES, DEFAULT_LOCALE } from '@/config/i18n';
+import { ACCEPTED_LOCALES, DEFAULT_LOCALE } from './src/config/i18n';
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,7 +14,7 @@ export default defineConfig({
   },
 
   i18n: {
-    locales: ACCEPTED_LOCALES,
+    locales: [...ACCEPTED_LOCALES],
     defaultLocale: DEFAULT_LOCALE,
     routing: {
       prefixDefaultLocale: true,

@@ -1,6 +1,7 @@
 ---
 import Banner from '@/components/Banner.astro';
 import Header from '@/components/common/header/Header.astro';
+import DescriptionText from '@/components/DescriptionText.astro';
 import Spacer from '@/components/Spacer.astro';
 
 import { ACCEPTED_LOCALES } from '@/config/i18n';
@@ -24,6 +25,7 @@ const metadata: Props['metadata'] = {
 <Layout metadata={metadata}>
   <Header />
   <Banner />
+  <DescriptionText />
 
   {[...Array(20).keys()].map(() => <Spacer />)}
 </Layout>;

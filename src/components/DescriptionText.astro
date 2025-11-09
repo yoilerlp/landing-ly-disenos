@@ -1,0 +1,56 @@
+---
+import SectionContainer from '@/components/common/SectionContainer.astro';
+import { getLangFromUrl, useTranslations } from '@/config/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+
+const t = useTranslations(lang);
+---
+
+<SectionContainer id='text-description' class='h-[700px]'>
+  <div class='max-w-5xl mx-auto'>
+    <h2
+      id='test-text'
+      class='font-lexend-deca text-[40px] leading-[63px] text-center text-white/50'
+    >
+      {t('description.text')}
+    </h2>
+  </div>
+</SectionContainer>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { SplitText } from 'gsap/SplitText';
+
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  const idText = '#test-text';
+  const scrollContainer = '#text-description';
+
+  const split = new SplitText(idText, { type: 'words' });
+
+  gsap.fromTo(
+    split.words,
+    { color: 'rgba(255, 255, 255, 0.5)' },
+    {
+      color: 'rgba(255, 255, 255, 1)',
+      ease: 'power3.inOut',
+      stagger: 0.05,
+      scrollTrigger: {
+        trigger: scrollContainer,
+        start: 'top 10%',
+        end: 'bottom 5%',
+        scrub: true,
+        markers: true,
+        pin: true,
+      },
+    }
+  );
+</script>
+
+<style>
+  :global(#text-description) {
+    background-image: var(--bg-mesa);
+  }
+</style>
