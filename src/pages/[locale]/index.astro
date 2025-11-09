@@ -1,0 +1,30 @@
+---
+import Banner from '@/components/Banner.astro';
+import Header from '@/components/common/header/Header.astro';
+import Spacer from '@/components/Spacer.astro';
+
+import { ACCEPTED_LOCALES } from '@/config/i18n';
+import Layout, { type Props } from '@/layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  return ACCEPTED_LOCALES.map((l) => {
+    return { params: { locale: l } };
+  });
+}
+
+const { locale } = Astro.params;
+
+const metadata: Props['metadata'] = {
+  title: 'Fusion Tower',
+  description: 'Landing page for Fusion Tower project',
+  lang: locale,
+};
+---
+
+<Layout metadata={metadata}>
+  <Header />
+  <Banner />
+
+  {[...Array(20).keys()].map(() => <Spacer />)}
+</Layout>;
+

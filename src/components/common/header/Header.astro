@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import Button from '@/components/common/Button.astro';
+import HeaderWrapper from '@/components/common/header/HeaderWrapper.tsx';
+
+import LogoSmall from '@/assets/FusionTowerLogoSmall.png';
+import WhatsappIcon from '@/assets/icons/whatsapp.svg';
+---
+
+<HeaderWrapper client:load>
+  <Image
+    src={LogoSmall}
+    alt='Logo Fusion Tower'
+    width={254}
+    height={16}
+    class='h-4'
+  />
+  <div class='flex items-center gap-4'>
+    <a
+      href='https://wa.me/573113813907'
+      target='_blank'
+      rel='noopener noreferrer'
+    >
+      <WhatsappIcon />
+    </a>
+    <Button>Contáctanos</Button>
+  </div>
+</HeaderWrapper>

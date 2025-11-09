@@ -1,26 +1,30 @@
 ---
 import '../styles/global.css';
+
+export type Props = {
+  metadata: {
+    title: string;
+    description: string;
+    lang: string;
+  };
+};
+
+const { metadata } = Astro.props;
 ---
 
 <!doctype html>
-<html lang='en'>
+<html lang={metadata.lang}>
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
-    <title>Astro Basics</title>
+    <title>{metadata.title}</title>
+    <meta name='description' content={metadata.description} />
   </head>
-  <body>
+  <body
+    class='antialiased min-h-screen font-sans bg-fixed bg-center bg-cover bg-primary'
+  >
     <slot />
   </body>
 </html>
-
-<style>
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-</style>
