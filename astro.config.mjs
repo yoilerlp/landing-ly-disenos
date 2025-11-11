@@ -25,8 +25,10 @@ export default defineConfig({
 
   integrations: [react()],
 
-  site: process.env.PUBLIC_SITE_URL,
-  base: process.env.PUBLIC_REPOSITORY_PATH,
+  site: import.meta.env.PUBLIC_SITE_URL || process.env.PUBLIC_SITE_URL,
+  base:
+    import.meta.env.PUBLIC_REPOSITORY_PATH ||
+    process.env.PUBLIC_REPOSITORY_PATH,
 
   env: {
     schema: {
