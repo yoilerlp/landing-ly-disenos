@@ -10,25 +10,43 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  # Define environment variables at workflow level
+  PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+  PUBLIC_REPOSITORY_PATH: ${{ vars.PUBLIC_REPOSITORY_PATH }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v5
-      - name: Debug env
-        run: |
-          echo "PUBLIC_SITE_URL=$PUBLIC_SITE_URL"
-          echo "PUBLIC_REPOSITORY_PATH=$PUBLIC_REPOSITORY_PATH"
-        env:
-          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
-          PUBLIC_REPOSITORY_PATH: ${{ vars.PUBLIC_REPOSITORY_PATH }}
 
-      - name: Install, build, and upload your site
-        uses: withastro/action@v5
-        env:
-          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
-          PUBLIC_REPOSITORY_PATH: ${{ vars.PUBLIC_REPOSITORY_PATH }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Debug environment variables
+        run: |
+          echo "=== Environment Variables ==="
+          echo "PUBLIC_SITE_URL=${PUBLIC_SITE_URL:-'Not set'}"
+          echo "PUBLIC_REPOSITORY_PATH=${PUBLIC_REPOSITORY_PATH:-'Not set'}"
+          echo "=== All PUBLIC/VITE/ASTRO vars ==="
+          printenv | grep -E "^(PUBLIC_|VITE_|ASTRO_)" || echo "No public env vars found"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build with environment variables
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./dist
 
   deploy:
     needs: build
