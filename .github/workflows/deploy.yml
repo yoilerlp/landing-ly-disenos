@@ -19,8 +19,8 @@ jobs:
       - name: Install, build, and upload your site
         uses: withastro/action@v5
         env:
-          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
-          PUBLIC_REPOSITORY_PATH: ${{ vars.PUBLIC_REPOSITORY_PATH }}
+          PUBLIC_SITE_URL: https://yoilerlp.github.io
+          PUBLIC_REPOSITORY_PATH: /landing-ly-disenos
         # Puedes configurar más opciones si lo necesitas:
         # with:
         #   path: .
