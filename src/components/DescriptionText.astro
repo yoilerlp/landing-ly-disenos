@@ -7,7 +7,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<SectionContainer id='text-description' class='h-[700px]'>
+<SectionContainer id='text-description'>
   <div class='max-w-5xl mx-auto'>
     <h2
       id='test-text'
@@ -42,7 +42,6 @@ const t = useTranslations(lang);
         start: 'top 10%',
         end: 'bottom 5%',
         scrub: true,
-        markers: true,
         pin: true,
       },
     }

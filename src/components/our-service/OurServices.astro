@@ -1,0 +1,148 @@
+---
+import SectionContainer from '@/components/common/SectionContainer.astro';
+import ServiceCategory from './ServiceCategory.astro';
+import ServiceImgCard from './ServiceImgCard.astro';
+import ServiceDetailCard from './ServiceDetailCard.astro';
+import { getLangFromUrl, useTranslationsObject } from '@/config/i18n';
+import { useServiceContentOrganized } from '@/helpers/useServiceContent';
+
+const lang = getLangFromUrl(Astro.url);
+
+const t = useTranslationsObject(lang);
+
+const getDescriptionLines = (description: string) => {
+  return description?.toUpperCase()?.replaceAll('\n', '<br />');
+};
+
+const { serviceData, serviceImages, serviceIcons } =
+  useServiceContentOrganized(t);
+---
+
+<SectionContainer id='our-services' class='pt-24 border'>
+  <div class='w-full grid grid-cols-2 gap-4 sm:gap-11'>
+    <!-- Col tabs -->
+    <div id='list-category'>
+      <p class='font-light text-2xl leading-[30px] text-text-gray mb-2'>
+        {t?.services?.title}
+      </p>
+
+      <h3
+        id='services-title'
+        class='mb-16 font-normal text-secondary text-5xl leading-12 uppercase transition-all'
+        set:html={getDescriptionLines(t?.services?.description)}
+      />
+
+      <!-- categorias -->
+      <ul class='[&_li]:pl-7' role='list'>
+        {
+          serviceData.map((service) => (
+            <ServiceCategory label={service.title} />
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Cards -->
+
+    <div class='h-screen' id='service-cards-list'>
+      {
+        serviceData.map((serviceSection, sectionIdx) => (
+          <div class='service-category-group' data-category={sectionIdx + 1}>
+            {serviceSection.services.map((service, sIdx) => {
+              const imgSrc = serviceImages[sectionIdx][sIdx];
+              const Icon = serviceIcons[sectionIdx][sIdx];
+              return (
+                <div class='flex gap-4 mb-6 even:flex-row-reverse'>
+                  <ServiceImgCard
+                    imageSrc={imgSrc}
+                    alt={service.title}
+                    isFull={sectionIdx > 1}
+                  />
+                  <ServiceDetailCard
+                    title={service.title}
+                    description={service.description}
+                  >
+                    <Icon slot='icon' />
+                  </ServiceDetailCard>
+                </div>
+              );
+            })}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</SectionContainer>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const sectionId = '#our-services';
+  const scrollContainer = document.querySelector('#service-cards-list');
+  const categories = document.querySelectorAll(
+    '#list-category .service-category-item'
+  );
+
+  const groups = gsap.utils.toArray('.service-category-group');
+  console.log({ groups, categories });
+  const cardEstimatedHeight = 300;
+
+  if (scrollContainer) {
+    gsap.to(scrollContainer, {
+      y: () => -(scrollContainer.scrollHeight - cardEstimatedHeight * 2),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sectionId,
+        start: 'top 30px',
+        // end: 'bottom center',
+        end: () =>
+          `+=${scrollContainer.scrollHeight - cardEstimatedHeight * 2}`,
+        scrub: 0.5,
+        pin: true,
+        markers: true,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    const serviceTitleClass = [
+      'text-secondary',
+      'text-blue-dark',
+      'text-green-light',
+    ];
+
+    function setActiveCategory(index: number) {
+      categories.forEach((li, i) => {
+        if (i === index) {
+          li.classList.add('active');
+          // Cambiar color título
+          const serviceTitle = document.querySelector('#services-title');
+          if (serviceTitle) {
+            serviceTitle.className = `mb-16 font-normal ${serviceTitleClass[i]} text-5xl`;
+          }
+        } else {
+          li.classList.remove('active');
+        }
+      });
+    }
+
+    // Activar categoría según scroll
+    groups.forEach((group: any, i) => {
+      ScrollTrigger.create({
+        trigger: group,
+        start: 'top center',
+        end: 'bottom center',
+        onEnter: () => setActiveCategory(i),
+        onEnterBack: () => setActiveCategory(i),
+      });
+    });
+  }
+</script>
+
+<style>
+  :global(#our-services) {
+    background-image: var(--bg-mesa);
+  }
+</style>

@@ -28,6 +28,11 @@
 
 :root {
   --container-padding: 0 16px;
+  --service-card-gradient: linear-gradient(
+    180deg,
+    var(--color-bg) 36.08%,
+    rgba(15, 77, 154, 0.6) 100%
+  );
 }
 
 @theme {
@@ -40,8 +45,15 @@
 
   --color-bg: #051a34;
   --color-primary: #051a34;
+  --color-primary-light: #07274f;
+  --color-blue-dark: #3769df;
   --color-secondary: #37bedf;
-  --color-text-secondary: #C7ECF6;
+  --color-green-light: #37dfd9;
+  --color-text-secondary: #c7ecf6;
+  --color-text-gray: #c4c4c4;
+  --color-grayTwo: #7b7b7b;
+  --color-grayThree: #c8c8c8;
+  --color-border: #104c9a;
 }
 
 .container {

@@ -1,0 +1,40 @@
+---
+export type Props = {
+  class?: string;
+  label: string;
+};
+
+const { class: className = '', label } = Astro.props;
+---
+
+<li
+  class='h-28 border-l-4 border-l-grayThree flex items-center will-change-[border-left-color] service-category-item'
+>
+  <span class='text-grayTwo text-4xl'>{label}</span>
+</li>
+
+<style>
+  li {
+    transition: border-left-color 0.3s ease;
+  }
+
+  li.active {
+    border-left-color: var(--color-secondary);
+  }
+
+  li.active:nth-child(1) {
+    border-left-color: var(--color-secondary);
+  }
+
+  li.active:nth-child(2) {
+    border-left-color: var(--color-blue-dark);
+  }
+
+  li.active:nth-child(3) {
+    border-left-color: var(--color-green-light);
+  }
+
+  li.active span {
+    color: white;
+  }
+</style>

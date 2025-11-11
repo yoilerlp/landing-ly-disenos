@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+
+type Props = {
+  imageSrc: any;
+  alt: string;
+  isFull?: boolean;
+};
+
+const { imageSrc, alt, isFull = false } = Astro.props;
+---
+
+<article
+  class='border border-border max-w-[300px] w-full h-[306px] overflow-hidden flex flex-col items-center justify-center'
+  class:list={{
+    'border-none': isFull,
+  }}
+>
+  <Image
+    src={imageSrc}
+    alt={alt}
+    class='w-[250px] h-[280px] object-contain'
+    class:list={{
+      'w-full h-full object-cover': isFull,
+    }}
+    width={300}
+  />
+</article>
+
+<style>
+  article {
+    border-radius: 20px;
+    background: var(--service-card-gradient);
+  }
+</style>

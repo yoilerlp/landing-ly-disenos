@@ -18,3 +18,7 @@ export function useTranslations(lang: Locale) {
   };
 }
 
+export function useTranslationsObject(lang: Locale) {
+  return localesText[lang] || localesText[DEFAULT_LOCALE];
+}
+
