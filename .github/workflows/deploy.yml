@@ -14,19 +14,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout your repository
         uses: actions/checkout@v5
+
       - name: Install, build, and upload your site
         uses: withastro/action@v5
         env:
           PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
           PUBLIC_REPOSITORY_PATH: ${{ vars.PUBLIC_REPOSITORY_PATH }}
-        # Puedes configurar más opciones si lo necesitas:
-        # with:
-        #   path: .
-        #   node-version: 22
-        #   package-manager: pnpm@latest
-        #   build-cmd: pnpm run build
+      - name: Debug env
+        run: |
+          echo "PUBLIC_SITE_URL=$PUBLIC_SITE_URL"
+          echo "PUBLIC_REPOSITORY_PATH=$PUBLIC_REPOSITORY_PATH"
+        env:
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+          PUBLIC_REPOSITORY_PATH: ${{ vars.PUBLIC_REPOSITORY_PATH }}
 
   deploy:
     needs: build
