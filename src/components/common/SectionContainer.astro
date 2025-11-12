@@ -5,19 +5,25 @@ type Props = {
   class?: string;
   containerClass?: string;
   id?: string;
+  idContainer?: string;
 };
 
-const { class: className = '', id = '', containerClass = '' } = Astro.props;
+const {
+  class: className = '',
+  id = '',
+  containerClass = '',
+  idContainer = '',
+} = Astro.props;
 ---
 
 <section
   class={cn(
-    'section-container min-h-svh relative w-full flex items-center',
+    'section-container h-screen relative w-full flex items-center',
     className
   )}
   id={id}
 >
-  <div class={cn('container', containerClass)}>
+  <div class={cn('container', containerClass)} id={idContainer}>
     <slot />
   </div>
 </section>

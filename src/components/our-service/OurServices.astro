@@ -5,20 +5,17 @@ import ServiceImgCard from './ServiceImgCard.astro';
 import ServiceDetailCard from './ServiceDetailCard.astro';
 import { getLangFromUrl, useTranslationsObject } from '@/config/i18n';
 import { useServiceContentOrganized } from '@/helpers/useServiceContent';
+import { getDescriptionLines } from '@/helpers/text';
 
 const lang = getLangFromUrl(Astro.url);
 
 const t = useTranslationsObject(lang);
 
-const getDescriptionLines = (description: string) => {
-  return description?.toUpperCase()?.replaceAll('\n', '<br />');
-};
-
 const { serviceData, serviceImages, serviceIcons } =
   useServiceContentOrganized(t);
 ---
 
-<SectionContainer id='our-services' class='pt-24 border'>
+<SectionContainer id='our-services' class='pt-24'>
   <div class='w-full grid grid-cols-2 gap-4 sm:gap-11'>
     <!-- Col tabs -->
     <div id='list-category'>
@@ -54,11 +51,13 @@ const { serviceData, serviceImages, serviceIcons } =
               return (
                 <div class='flex gap-4 mb-6 even:flex-row-reverse'>
                   <ServiceImgCard
+                    class='w-1/2'
                     imageSrc={imgSrc}
                     alt={service.title}
                     isFull={sectionIdx > 1}
                   />
                   <ServiceDetailCard
+                    class='w-1/2'
                     title={service.title}
                     description={service.description}
                   >
@@ -87,7 +86,6 @@ const { serviceData, serviceImages, serviceIcons } =
   );
 
   const groups = gsap.utils.toArray('.service-category-group');
-  console.log({ groups, categories });
   const cardEstimatedHeight = 300;
 
   if (scrollContainer) {

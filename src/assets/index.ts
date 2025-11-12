@@ -22,6 +22,12 @@ import SunnySnowingIcon from './icons/SunnySnowing.svg';
 import WhatsappIcon from './icons/whatsapp.svg';
 import PhoneStar from './icons/PhoneStar.svg';
 
+import TresEllipse from './icons/TresEllipse.svg';
+import TresEllipseWithAro from './icons/TresEllipseWithAro.svg';
+import TresEllipseWithTresAros from './icons/TresEllipseWithTresAros.svg';
+import TresEllipseWithTwoAros from './icons/TresEllipseWithTwoAros.svg';
+import Ellipse from './icons/Ellipse.svg';
+
 const imagesServices = {
   CalendyDesktop,
   CalendyNokiaXR21,
@@ -45,8 +51,15 @@ export const icons = {
   SunnySnowingIcon,
   WhatsappIcon,
   PhoneStar,
+
+  TresEllipse,
+  TresEllipseWithAro,
+  TresEllipseWithTresAros,
+  TresEllipseWithTwoAros,
+  Ellipse,
 };
 export const images = {
   services: imagesServices,
 };
+
 

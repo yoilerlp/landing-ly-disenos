@@ -1,16 +1,18 @@
 ---
+import { cn } from '@/helpers/cn';
+
 type Props = {
   title: string;
   description: string;
   variant?: 'primary' | 'secondary' | 'tertiary';
+  class?: string;
 };
 
-const { title, description, variant = 'primary' } = Astro.props;
+const { title, description, variant = 'primary', class: customClass } = Astro.props;
 ---
 
 <article
-  class='bg-bg rounded-[20px] border border-border max-w-[300px] w-full h-[306px] overflow-hidden
-    flex flex-col justify-between'
+  class={cn('bg-bg rounded-[20px] border border-border w-full h-[306px] overflow-hidden flex flex-col justify-between', customClass)}
 >
   <!--  Card icon -->
   <div

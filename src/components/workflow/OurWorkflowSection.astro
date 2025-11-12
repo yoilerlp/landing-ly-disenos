@@ -1,0 +1,69 @@
+---
+import { useWorkFlowContentOrganized } from '@/helpers/useWorkFlowContent';
+import WorkFlowCard from './WorkFlowCard.astro';
+import { getLangFromUrl, useTranslationsObject } from '@/config/i18n';
+import { getDescriptionLines } from '@/helpers/text';
+
+const lang = getLangFromUrl(Astro.url);
+
+const t = useTranslationsObject(lang);
+
+const { workFlowSteps, workFlowIcons } = useWorkFlowContentOrganized(t);
+---
+
+<section class='flex-col p-5 min-h-[80vh' id='our-workflow'>
+  <div
+    class='p-16! overflow-hidden border-border h-[700px] bg-blue-medium border rounded-[20px]'
+  >
+    <h4
+      class='font-lexend font-light uppercase leading-10 text-[32px] text-text-gray mb-24'
+      set:html={getDescriptionLines(t?.workflow?.title)}
+    />
+
+    <div class='flex gap-32' id='workflow-steps-list'>
+      {
+        workFlowSteps.map((step, idx) => {
+          const Icon = workFlowIcons[idx];
+          return <WorkFlowCard step={step} stepNumber={idx + 1} Icon={Icon} />;
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = document.querySelector('#our-workflow');
+
+  const container = document.querySelector('#workflow-steps-list');
+
+  if (section && container) {
+    const totalScrollWidth = container.scrollWidth;
+    const viewportWidth = window.innerWidth;
+    const scrollDistance = totalScrollWidth - viewportWidth + 300;
+
+    gsap.to(container, {
+      x: -scrollDistance,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 10%',
+        end: () => `+=${scrollDistance}`,
+        scrub: true,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+  }
+</script>
+
+<style>
+  :global(#our-workflow) {
+    background-image: var(--bg-mesa);
+  }
+</style>
