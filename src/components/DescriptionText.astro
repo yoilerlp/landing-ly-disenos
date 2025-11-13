@@ -19,33 +19,33 @@ const t = useTranslations(lang);
 </SectionContainer>
 
 <script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import { SplitText } from 'gsap/SplitText';
+  // import { gsap } from 'gsap';
+  // import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  // import { SplitText } from 'gsap/SplitText';
 
-  gsap.registerPlugin(ScrollTrigger, SplitText);
+  // gsap.registerPlugin(ScrollTrigger, SplitText);
 
-  const idText = '#test-text';
-  const scrollContainer = '#text-description';
+  // const idText = '#test-text';
+  // const scrollContainer = '#text-description';
 
-  const split = new SplitText(idText, { type: 'words' });
+  // const split = new SplitText(idText, { type: 'words' });
 
-  gsap.fromTo(
-    split.words,
-    { color: 'rgba(255, 255, 255, 0.5)' },
-    {
-      color: 'rgba(255, 255, 255, 1)',
-      ease: 'power3.inOut',
-      stagger: 0.05,
-      scrollTrigger: {
-        trigger: scrollContainer,
-        start: 'top 10%',
-        end: 'bottom 5%',
-        scrub: true,
-        pin: true,
-      },
-    }
-  );
+  // gsap.fromTo(
+  //   split.words,
+  //   { color: 'rgba(255, 255, 255, 0.5)' },
+  //   {
+  //     color: 'rgba(255, 255, 255, 1)',
+  //     ease: 'power3.inOut',
+  //     stagger: 0.05,
+  //     scrollTrigger: {
+  //       trigger: scrollContainer,
+  //       start: 'top 10%',
+  //       end: 'bottom 5%',
+  //       scrub: true,
+  //       pin: true,
+  //     },
+  //   }
+  // );
 </script>
 
 <style>
