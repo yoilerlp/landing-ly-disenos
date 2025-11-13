@@ -35,6 +35,10 @@
   );
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme {
   --font-sans: 'Lexend', 'sans-serif';
   --font-lexend: 'Lexend', sans-serif;

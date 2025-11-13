@@ -1,20 +1,13 @@
 ---
-import { Image } from 'astro:assets';
 import Button from '@/components/common/Button.astro';
 import HeaderWrapper from '@/components/common/header/HeaderWrapper.tsx';
 
-import LogoSmall from '@/assets/FusionTowerLogoSmall.png';
 import WhatsappIcon from '@/assets/icons/whatsapp.svg';
+import FusionTowerIcon from '@/assets/icons/LogoFusionTowerSmall.svg';
 ---
 
 <HeaderWrapper client:load>
-  <Image
-    src={LogoSmall}
-    alt='Logo Fusion Tower'
-    width={254}
-    height={16}
-    class='h-4'
-  />
+  <FusionTowerIcon width={254} height={50} />
   <div class='flex items-center gap-4'>
     <a
       href='https://wa.me/573186953119'
