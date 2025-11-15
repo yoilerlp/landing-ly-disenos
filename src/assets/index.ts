@@ -12,7 +12,6 @@ import WomenWithPhone from './images/services/womenWithPhone.png';
 // Icons
 import ExtensionIcon from './icons/Extension.svg';
 import FavoriteIcon from './icons/Favorite.svg';
-import FusionTowerIcon from './icons/FUSION TOWER.png';
 import MediationIcon from './icons/Mediation.svg';
 import PhoneIcon from './icons/Phone.svg';
 import RobotIcon from './icons/Robot.svg';
@@ -46,7 +45,6 @@ const imagesServices = {
 export const icons = {
   ExtensionIcon,
   FavoriteIcon,
-  FusionTowerIcon,
   MediationIcon,
   PhoneIcon,
   RobotIcon,
