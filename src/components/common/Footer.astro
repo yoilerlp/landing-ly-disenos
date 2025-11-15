@@ -1,8 +1,64 @@
 ---
+import Link from '@/components/common/Link.astro';
+import Button from '@/components/common/Button.astro';
+import { icons } from '@/assets';
+import FusionTowerFooter from '@/assets/images/FusionTowerFooter.svg';
+import {
+  DEFAULT_LOCALE,
+  getLangFromUrl,
+  useTranslationsObject,
+} from '@/config/i18n';
+import { withLocale } from '@/helpers/withLocale';
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslationsObject(lang);
+
+const currentLocale = Astro.currentLocale || DEFAULT_LOCALE;
 ---
 
-<footer class='h-[500px]'>holaaa</footer>
+<footer class='p-5'>
+  <section class='flex justify-between mb-12'>
+    <div class='flex gap-9 items-center'>
+      <Link href={withLocale(currentLocale, '/')}>{t.footer.home}</Link>
+      <Link href={withLocale(currentLocale, '/contact')}
+        >{t.footer.contactUs}</Link
+      >
+    </div>
+
+    <div class='flex gap-6 items-center'>
+      <Link href={'www.facebook.com/fusiontower'}>
+        <img src={icons.FacebookIcon.src} alt='Facebook' />
+      </Link>
+      <Link href={'www.facebook.com/fusiontower'}>
+        <img src={icons.InstagramIcon.src} alt='Instagram' />
+      </Link>
+      <Link href={'www.facebook.com/fusiontower'}>
+        <img src={icons.LinkedinIcon.src} alt='LinkedIn' />
+      </Link>
+    </div>
+  </section>
+
+  <section class='px-3 mb-[70px]'>
+    <FusionTowerFooter class='w-full h-auto' />
+  </section>
+
+  <section class='flex justify-between items-center mb-11'>
+    <p
+      class='font-lexend-deca font-medium text-[16px] uppercase leading-6 text-secondary'
+    >
+      {t.footer.copyRight}
+    </p>
+
+    <Link href='#'>{t.footer.privacyPolicy}</Link>
+  </section>
+
+  <section class='h-[400px] flex flex-col items-center pt-[120px]'>
+    <h5 class='font-lexend text-[40px] text-secondary leading-12 mb-7'>
+      {t.footer.moreBeforeYouGo}
+    </h5>
+    <Button>{t.footer.showMe}</Button>
+  </section>
+</footer>
 
 <style>
   footer {

@@ -1,0 +1,21 @@
+---
+import { cn } from '@/helpers/cn';
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'> & {
+  href: string;
+  class?: string;
+};
+
+const { href, class: className = '' } = Astro.props;
+---
+
+<a
+  href={href}
+  class={cn(
+    'font-lexend-deca font-medium text-[16px] uppercase leading-6 text-secondary',
+    className
+  )}
+>
+  <slot />
+</a>

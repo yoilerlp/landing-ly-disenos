@@ -32,34 +32,34 @@ const { workFlowSteps, workFlowIcons } = useWorkFlowContentOrganized(t);
 </section>
 
 <script>
-  // import { gsap } from 'gsap';
-  // import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  // gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 
-  // const section = document.querySelector('#our-workflow');
+  const section = document.querySelector('#our-workflow');
 
-  // const container = document.querySelector('#workflow-steps-list');
+  const container = document.querySelector('#workflow-steps-list');
 
-  // if (section && container) {
-  //   const totalScrollWidth = container.scrollWidth;
-  //   const viewportWidth = window.innerWidth;
-  //   const scrollDistance = totalScrollWidth - viewportWidth + 300;
+  if (section && container) {
+    const totalScrollWidth = container.scrollWidth;
+    const viewportWidth = window.innerWidth;
+    const scrollDistance = totalScrollWidth - viewportWidth + 300;
 
-  //   gsap.to(container, {
-  //     x: -scrollDistance,
-  //     ease: 'none',
-  //     scrollTrigger: {
-  //       trigger: section,
-  //       start: 'top 10%',
-  //       end: () => `+=${scrollDistance}`,
-  //       scrub: true,
-  //       pin: true,
-  //       anticipatePin: 1,
-  //       invalidateOnRefresh: true,
-  //     },
-  //   });
-  // }
+    gsap.to(container, {
+      x: -scrollDistance,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 10%',
+        end: () => `+=${scrollDistance}`,
+        scrub: true,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+  }
 </script>
 
 <style>

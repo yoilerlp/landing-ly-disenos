@@ -1,0 +1,28 @@
+---
+import Footer from '@/components/common/Footer.astro';
+import Header from '@/components/common/header/Header.astro';
+import ContactForm from '@/components/forms/ContactForm.astro';
+
+import Layout, { type Props } from '@/layouts/Layout.astro';
+
+import { ACCEPTED_LOCALES } from '@/config/i18n';
+
+export async function getStaticPaths() {
+  return ACCEPTED_LOCALES.map((l) => {
+    return { params: { locale: l } };
+  });
+}
+const { locale } = Astro.params;
+
+const metadata: Props['metadata'] = {
+  title: 'Fusion Tower - Contact',
+  description: 'Landing page for Fusion Tower project',
+  lang: locale!,
+};
+---
+
+<Layout metadata={metadata}>
+  <Header />
+  <ContactForm />
+  <Footer />
+</Layout>;

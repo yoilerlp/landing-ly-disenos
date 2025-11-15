@@ -1,0 +1,73 @@
+---
+import { getLangFromUrl, useTranslationsObject } from '@/config/i18n';
+import SectionContainer from '../common/SectionContainer.astro';
+import Input from './Input.astro';
+import Button from '../common/Button.astro';
+
+const lang = getLangFromUrl(Astro.url);
+
+const t = useTranslationsObject(lang);
+
+const requieredText = (text: string) => `${text}*`;
+---
+
+<SectionContainer
+  class='h-auto items-center pb-14 sm:pb-20'
+  id='contact-form-container'
+  containerClass='mt-5'
+>
+  <h1
+    class='font-lexend uppercase text-[64px] font-normal text-text-secondary mb-20'
+  >
+    {t.contact.title}
+    <br />
+    <span class='text-secondary'>
+      {t.contact.question}
+    </span>
+  </h1>
+
+  <form action='#' method='post' class=''>
+    <fieldset
+      class='grid grid-cols-1 gap-6 mb-7 sm:grid-cols-2 sm:gap-[74px] sm:mb-14'
+    >
+      <Input
+        required
+        placeholder={requieredText(t.contact.inputs.name)}
+        type='text'
+        name='name'
+        minlength={2}
+      />
+      <Input
+        required
+        placeholder={requieredText(t.contact.inputs.email)}
+        type='email'
+        name='email'
+      />
+      <Input
+        required
+        placeholder={requieredText(t.contact.inputs.service)}
+        type='text'
+        name='service'
+        minlength={2}
+      />
+      <Input
+        required
+        placeholder={requieredText(t.contact.inputs.message)}
+        type='text'
+        name='message'
+        minlength={2}
+      />
+    </fieldset>
+    <Button class={'w-full'}>{t.contact.submit}</Button>
+  </form>
+</SectionContainer>
+
+<style>
+  :global(#contact-form-container) {
+    background-image: var(--banner-gradient);
+    padding-top: 104px;
+  }
+
+  :global(footer) {
+  }
+</style>

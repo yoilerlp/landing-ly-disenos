@@ -1,9 +1,18 @@
 ---
+import { cn } from '@/helpers/cn';
+import type { HTMLAttributes } from 'astro/types';
 
+type Props = HTMLAttributes<'button'>;
+
+const { class: className, ...rest } = Astro.props;
 ---
 
 <button
-  class='hover:opacity-80 cursor-pointer mix-blend-normal bg-secondary text-primary h-14 rounded-[100px] flex items-center justify-center px-6 gap-2 font-lexend-deca'
+  class={cn(
+    'hover:opacity-80 cursor-pointer mix-blend-normal bg-secondary text-primary h-14 rounded-[100px] flex items-center justify-center px-6 gap-2 font-lexend-deca',
+    className
+  )}
+  {...rest}
 >
   <slot />
 </button>

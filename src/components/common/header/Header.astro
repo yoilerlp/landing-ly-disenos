@@ -4,6 +4,10 @@ import HeaderWrapper from '@/components/common/header/HeaderWrapper.tsx';
 
 import WhatsappIcon from '@/assets/icons/whatsapp.svg';
 import FusionTowerIcon from '@/assets/icons/LogoFusionTowerSmall.svg';
+import Link from '../Link.astro';
+import { withLocale } from '@/helpers/withLocale';
+
+const currentLocale = Astro.currentLocale || 'es';
 ---
 
 <HeaderWrapper client:load>
@@ -16,6 +20,8 @@ import FusionTowerIcon from '@/assets/icons/LogoFusionTowerSmall.svg';
     >
       <WhatsappIcon />
     </a>
-    <Button>Contáctanos</Button>
+    <Link href={withLocale(currentLocale, '/contact')}>
+      <Button>Contáctanos</Button>
+    </Link>
   </div>
 </HeaderWrapper>

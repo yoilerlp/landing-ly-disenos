@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 export type Props = {
@@ -21,14 +22,9 @@ const { metadata } = Astro.props;
     <meta name='generator' content={Astro.generator} />
     <title>{metadata.title}</title>
     <meta name='description' content={metadata.description} />
+    <ClientRouter />
   </head>
-  <body
-    class='antialiased min-h-screen font-sans bg-fixed bg-center bg-cover bg-primary'
-  >
+  <body class='antialiased font-sans min-h-svh bg-primary'>
     <slot />
   </body>
 </html>
-
-<script>
-  
-</script>
