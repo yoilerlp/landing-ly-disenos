@@ -27,7 +27,7 @@ import TresEllipseWithTresAros from './icons/TresEllipseWithTresAros.svg';
 import TresEllipseWithTwoAros from './icons/TresEllipseWithTwoAros.svg';
 import Ellipse from './icons/Ellipse.svg';
 
-import FacebookIcon from './icons/facebook.svg';
+import FacebookIcon from './icons/Facebook.svg';
 import InstagramIcon from './icons/instagram.svg';
 import LinkedinIcon from './icons/linkedin.svg';
 
