@@ -69,4 +69,3 @@ export const images = {
   services: imagesServices,
 };
 
-
