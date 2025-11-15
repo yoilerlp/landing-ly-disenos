@@ -28,8 +28,8 @@ import TresEllipseWithTwoAros from './icons/TresEllipseWithTwoAros.svg';
 import Ellipse from './icons/Ellipse.svg';
 
 import FacebookIcon from './icons/Facebook.svg';
-import InstagramIcon from './icons/instagram.svg';
-import LinkedinIcon from './icons/linkedin.svg';
+import InstagramIcon from './icons/Instagram.svg';
+import LinkedinIcon from './icons/Linkedin.svg';
 
 const imagesServices = {
   CalendyDesktop,
