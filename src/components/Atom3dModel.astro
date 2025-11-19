@@ -56,6 +56,11 @@
     renderer.setPixelRatio(window.devicePixelRatio);
 
     // --- Luces ---
+    const modelcolor = 0x062854;
+    const dir = new THREE.DirectionalLight(modelcolor);
+    dir.position.set(2, 3, 4);
+    scene.add(dir);
+    scene.add(new THREE.AmbientLight(modelcolor));
 
     // --- Cargar modelo ---
     const loader = new GLTFLoader();
