@@ -8,7 +8,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<SectionContainer id='banner' class='banner' containerClass='relative'>
+<SectionContainer id='banner' class='banner relative' containerClass='relative'>
   <div class='px-4 sm:px-10 relative z-10 pointer-events-none'>
     <h1 class='text-[64px] text-secondary uppercase relative'>
       <div class='overflow-hidden'>
@@ -42,7 +42,7 @@ const t = useTranslations(lang);
   <div
     slot='atom'
     id='atom-container'
-    class='w-full h-full absolute top-0 left-0 flex justify-center'
+    class='w-full min-h-[600px] absolute top-12 left-0 flex justify-center'
   >
     <Atom3DModel />
   </div>
@@ -51,20 +51,34 @@ const t = useTranslations(lang);
 <script>
   import { gsap } from 'gsap';
 
-  const titleTl = gsap.timeline({});
+  // Al entrar en la página: reiniciar animación
+  const runAnimation = () => {
+    // RESET: aseguramos que empieza oculta
+    gsap.set('.title-text', { y: '100%' });
+    gsap.set('#atom-container', { scale: 0.5, opacity: 0 });
 
-  titleTl.to('.title-text', {
-    y: '0%',
-    duration: 1,
-    ease: 'power2.out',
-    // stagger: 0.3,
-  });
+    const titleTl = gsap.timeline({});
 
-  titleTl.fromTo(
-    '#atom-container',
-    { transform: 'scale(0.5)', opacity: 0 },
-    { transform: 'scale(1)', opacity: 1, ease: 'sine.in', duration: 1 }
-  );
+    titleTl.to('.title-text', {
+      y: '0%',
+      duration: 1,
+      ease: 'power2.out',
+    });
+
+    titleTl.fromTo(
+      '#atom-container',
+      { scale: 0.5, opacity: 0 },
+      { scale: 1, opacity: 1, ease: 'sine.in', duration: 1 },
+      '-=0.6'
+    );
+  };
+
+  // Ejecutar animación cuando la página carga
+  runAnimation();
+
+  // Si usas navegación parcial (View Transitions / client router),
+  // forzar re-ejecución cada vez que vuelves a esta página.
+  document.addEventListener('astro:after-swap', runAnimation);
 </script>
 
 <style>

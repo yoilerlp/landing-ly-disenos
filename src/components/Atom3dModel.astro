@@ -34,6 +34,11 @@
   const MAX_VERTICAL_ROT = 1; // límite vertical de inclinación
   let trackingEnabled = false; // tracking solo cuando hay hover
 
+  // --- Auto-rotación ---
+  let autoRotate = false;
+  let lastHoverTime = Date.now();
+  const IDLE_TIME_MS = 10000; // 10 segundos en milisegundos
+
   const init = () => {
     const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
 
@@ -73,7 +78,7 @@
         model.rotation.x = initialRotX;
         model.rotation.y = initialRotY;
 
-        model.scale.set(0.04, 0.04, 0.04);
+        model.scale.set(0.045, 0.045, 0.045);
 
         scene.add(model);
       },
@@ -84,10 +89,13 @@
     // --- Eventos de hover ---
     canvas.addEventListener('mouseenter', () => {
       trackingEnabled = true;
+      autoRotate = false; // Detener auto-rotación cuando hay hover
+      lastHoverTime = Date.now(); // Actualizar el tiempo del último hover
     });
 
     canvas.addEventListener('mouseleave', () => {
       trackingEnabled = false;
+      lastHoverTime = Date.now(); // Actualizar el tiempo al salir del hover
 
       // volver suave al estado inicial
       targetRotX = initialRotX;
@@ -97,6 +105,9 @@
     // --- Mouse ---
     window.addEventListener('mousemove', (e) => {
       if (!trackingEnabled) return;
+
+      lastHoverTime = Date.now(); // Actualizar el tiempo con cada movimiento del mouse
+      autoRotate = false; // Detener auto-rotación durante la interacción
 
       const rect = canvas.getBoundingClientRect();
 
@@ -127,12 +138,26 @@
   const animate = () => {
     requestAnimationFrame(animate);
 
+    // Verificar si han pasado 30 segundos sin hover
+    const timeSinceLastHover = Date.now() - lastHoverTime;
+    if (timeSinceLastHover >= IDLE_TIME_MS && !trackingEnabled) {
+      autoRotate = true;
+    }
+
     if (model) {
       const smooth = 0.08;
 
-      // interpolar suavemente hacia la pose deseada
-      model.rotation.x += (targetRotX - model.rotation.x) * smooth;
-      model.rotation.y += (targetRotY - model.rotation.y) * smooth;
+      if (autoRotate) {
+        // Auto-rotación horizontal continua
+        model.rotation.y += 0.005; // Velocidad de rotación automática
+
+        // Mantener X en posición inicial
+        model.rotation.x += (initialRotX - model.rotation.x) * smooth;
+      } else {
+        // interpolar suavemente hacia la pose deseada
+        model.rotation.x += (targetRotX - model.rotation.x) * smooth;
+        model.rotation.y += (targetRotY - model.rotation.y) * smooth;
+      }
     }
 
     renderer.render(scene, camera);
@@ -149,4 +174,6 @@
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
     camera.updateProjectionMatrix();
   });
+
+  document.addEventListener('astro:after-swap', init);
 </script>
