@@ -1,3 +1,4 @@
+import { BASE } from '@/helpers/constants';
 import { localesText } from './locales';
 
 export const ACCEPTED_LOCALES = ['es', 'en'] as const;
@@ -8,8 +9,6 @@ export type Locale = (typeof ACCEPTED_LOCALES)[number];
 
 export function getLangFromUrl(url: URL) {
   // Quitar el base path si existe
-
-  const BASE = import.meta.env.PUBLIC_REPOSITORY_PATH || '';
 
   let path = url.pathname;
 
