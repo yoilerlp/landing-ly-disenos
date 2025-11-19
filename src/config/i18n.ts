@@ -1,4 +1,4 @@
-import { BASE } from '@/helpers/constants';
+import { BASE } from '../helpers/constants';
 import { localesText } from './locales';
 
 export const ACCEPTED_LOCALES = ['es', 'en'] as const;
