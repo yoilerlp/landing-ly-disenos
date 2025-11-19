@@ -25,6 +25,9 @@ const {
 >
   <div class={cn('container', containerClass)} id={idContainer}>
     <slot />
+
+    <!-- optinal slop Atom -->
+    {Astro.slots.atom ? <slot name='atom' /> : null}
   </div>
 </section>
 

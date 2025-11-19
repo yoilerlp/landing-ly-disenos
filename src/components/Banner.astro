@@ -1,15 +1,16 @@
 ---
 import { getLangFromUrl, useTranslations } from '@/config/i18n';
 import SectionContainer from './common/SectionContainer.astro';
+import Atom3DModel from './Atom3dModel.astro';
 
 const lang = getLangFromUrl(Astro.url);
 
 const t = useTranslations(lang);
 ---
 
-<SectionContainer id='banner' class='banner'>
-  <div class='px-4 sm:px-10'>
-    <h1 class='text-[64px] text-secondary uppercase'>
+<SectionContainer id='banner' class='banner' containerClass='relative'>
+  <div class='px-4 sm:px-10 relative z-10 pointer-events-none'>
+    <h1 class='text-[64px] text-secondary uppercase relative'>
       <div class='overflow-hidden'>
         <div class='title-text font-lexend-exa'>
           {t('banner.titulo.lineOne')}
@@ -37,6 +38,14 @@ const t = useTranslations(lang);
       </div>
     </h1>
   </div>
+
+  <div
+    slot='atom'
+    id='atom-container'
+    class='w-full h-full absolute top-0 left-0 flex justify-center'
+  >
+    <Atom3DModel />
+  </div>
 </SectionContainer>
 
 <script>
@@ -50,6 +59,12 @@ const t = useTranslations(lang);
     ease: 'power2.out',
     // stagger: 0.3,
   });
+
+  titleTl.fromTo(
+    '#atom-container',
+    { transform: 'scale(0.5)', opacity: 0 },
+    { transform: 'scale(1)', opacity: 1, ease: 'sine.in', duration: 1 }
+  );
 </script>
 
 <style>

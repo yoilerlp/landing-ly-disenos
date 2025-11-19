@@ -1,0 +1,147 @@
+<section class='hero-3d w-full h-full'>
+  <canvas id='hero-canvas'></canvas>
+</section>
+
+<style>
+  .hero-3d {
+    width: 100%;
+  }
+  #hero-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+  }
+</style>
+
+<script>
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+  let scene: THREE.Scene,
+    camera: THREE.PerspectiveCamera,
+    renderer: THREE.WebGLRenderer;
+  let model: THREE.Group | null = null;
+
+  // --- Rotación inicial del modelo ---
+  const initialRotX = Math.PI / 2; // enderezarlo
+  const initialRotY = Math.PI / 2; // que mire hacia el frente
+
+  // --- Targets que inician en la rotación inicial ---
+  let targetRotX = initialRotX;
+  let targetRotY = initialRotY;
+
+  const MAX_VERTICAL_ROT = 1; // límite vertical de inclinación
+  let trackingEnabled = false; // tracking solo cuando hay hover
+
+  const init = () => {
+    const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
+
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera(
+      45,
+      canvas.clientWidth / canvas.clientHeight,
+      0.1,
+      1000
+    );
+    camera.position.set(0, 0, 4);
+
+    renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+    });
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    // --- Luces ---
+
+    // --- Cargar modelo ---
+    const loader = new GLTFLoader();
+    loader.load(
+      '/ft.glb',
+      (gltf) => {
+        model = gltf.scene;
+
+        model.position.set(0, 0, 0);
+        model.rotation.x = initialRotX;
+        model.rotation.y = initialRotY;
+
+        model.scale.set(0.04, 0.04, 0.04);
+
+        scene.add(model);
+      },
+      undefined,
+      (error) => console.error('Error cargando GLB:', error)
+    );
+
+    // --- Eventos de hover ---
+    canvas.addEventListener('mouseenter', () => {
+      trackingEnabled = true;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      trackingEnabled = false;
+
+      // volver suave al estado inicial
+      targetRotX = initialRotX;
+      targetRotY = initialRotY;
+    });
+
+    // --- Mouse ---
+    window.addEventListener('mousemove', (e) => {
+      if (!trackingEnabled) return;
+
+      const rect = canvas.getBoundingClientRect();
+
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+
+      const normX = x * 2 - 1;
+      const normY = -(y * 2 - 1);
+
+      const intensity = 1.2;
+
+      // rotación horizontal sobre Y
+      targetRotY = initialRotY + normX * intensity;
+
+      // rotación vertical con inversión y límite
+      let vertical = -normY * intensity;
+      vertical = Math.max(
+        -MAX_VERTICAL_ROT,
+        Math.min(MAX_VERTICAL_ROT, vertical)
+      );
+
+      targetRotX = initialRotX + vertical;
+    });
+
+    animate();
+  };
+
+  const animate = () => {
+    requestAnimationFrame(animate);
+
+    if (model) {
+      const smooth = 0.08;
+
+      // interpolar suavemente hacia la pose deseada
+      model.rotation.x += (targetRotX - model.rotation.x) * smooth;
+      model.rotation.y += (targetRotY - model.rotation.y) * smooth;
+    }
+
+    renderer.render(scene, camera);
+  };
+
+  window.addEventListener('load', init);
+
+  // --- Resize handler ---
+  window.addEventListener('resize', () => {
+    const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
+    if (!renderer || !camera) return;
+
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
+  });
+</script>

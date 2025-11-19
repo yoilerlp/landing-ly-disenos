@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "dev:env": "export $(cat .env | xargs) && npm run dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -19,6 +20,10 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "three": "^0.181.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.181.0"
   }
 }
