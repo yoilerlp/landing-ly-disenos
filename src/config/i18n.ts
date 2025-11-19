@@ -7,8 +7,23 @@ export const DEFAULT_LOCALE = ACCEPTED_LOCALES[0];
 export type Locale = (typeof ACCEPTED_LOCALES)[number];
 
 export function getLangFromUrl(url: URL) {
-  const [, lang] = url.pathname.split('/');
-  if (lang in localesText) return lang as keyof typeof localesText;
+  // Quitar el base path si existe
+
+  const BASE = import.meta.env.PUBLIC_REPOSITORY_PATH || '';
+
+  let path = url.pathname;
+
+  if (BASE && path.startsWith(BASE)) {
+    path = path.slice(BASE.length);
+  }
+
+  // Partir por segmentos limpios
+  const [, lang] = path.split('/');
+
+  if (lang in localesText) {
+    return lang as keyof typeof localesText;
+  }
+
   return DEFAULT_LOCALE;
 }
 
