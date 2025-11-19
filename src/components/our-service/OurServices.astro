@@ -43,9 +43,9 @@ const { serviceData, serviceImages, serviceIcons } =
 
     <div class='h-screen' id='service-cards-list'>
       {
-        serviceData.slice(0,1).map((serviceSection, sectionIdx) => (
+        serviceData.map((serviceSection, sectionIdx) => (
           <div class='service-category-group' data-category={sectionIdx + 1}>
-            {serviceSection.services.slice(0,1).map((service, sIdx) => {
+            {serviceSection.services.map((service, sIdx) => {
               const imgSrc = serviceImages[sectionIdx][sIdx];
               const Icon = serviceIcons[sectionIdx][sIdx];
               return (
@@ -74,69 +74,68 @@ const { serviceData, serviceImages, serviceIcons } =
 </SectionContainer>
 
 <script>
-  // import { gsap } from 'gsap';
-  // import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  // gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 
-  // const sectionId = '#our-services';
-  // const scrollContainer = document.querySelector('#service-cards-list');
-  // const categories = document.querySelectorAll(
-  //   '#list-category .service-category-item'
-  // );
+  const sectionId = '#our-services';
+  const scrollContainer = document.querySelector('#service-cards-list');
+  const categories = document.querySelectorAll(
+    '#list-category .service-category-item'
+  );
 
-  // const groups = gsap.utils.toArray('.service-category-group');
-  // const cardEstimatedHeight = 300;
+  const groups = gsap.utils.toArray('.service-category-group');
+  const cardEstimatedHeight = 300;
 
-  // if (scrollContainer) {
-  //   gsap.to(scrollContainer, {
-  //     y: () => -(scrollContainer.scrollHeight - cardEstimatedHeight * 2),
-  //     ease: 'none',
-  //     scrollTrigger: {
-  //       trigger: sectionId,
-  //       start: 'top 30px',
-  //       // end: 'bottom center',
-  //       end: () =>
-  //         `+=${scrollContainer.scrollHeight - cardEstimatedHeight * 2}`,
-  //       scrub: 0.5,
-  //       pin: true,
-  //       markers: true,
-  //       invalidateOnRefresh: true,
-  //     },
-  //   });
+  if (scrollContainer) {
+    gsap.to(scrollContainer, {
+      y: () => -(scrollContainer.scrollHeight - cardEstimatedHeight * 2),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sectionId,
+        start: 'top 30px',
+        // end: 'bottom center',
+        end: () =>
+          `+=${scrollContainer.scrollHeight - cardEstimatedHeight * 2}`,
+        scrub: 0.5,
+        pin: true,
+        invalidateOnRefresh: true,
+      },
+    });
 
-  //   const serviceTitleClass = [
-  //     'text-secondary',
-  //     'text-blue-dark',
-  //     'text-green-light',
-  //   ];
+    const serviceTitleClass = [
+      'text-secondary',
+      'text-blue-dark',
+      'text-green-light',
+    ];
 
-  //   function setActiveCategory(index: number) {
-  //     categories.forEach((li, i) => {
-  //       if (i === index) {
-  //         li.classList.add('active');
-  //         // Cambiar color título
-  //         const serviceTitle = document.querySelector('#services-title');
-  //         if (serviceTitle) {
-  //           serviceTitle.className = `mb-16 font-normal ${serviceTitleClass[i]} text-5xl`;
-  //         }
-  //       } else {
-  //         li.classList.remove('active');
-  //       }
-  //     });
-  //   }
+    function setActiveCategory(index: number) {
+      categories.forEach((li, i) => {
+        if (i === index) {
+          li.classList.add('active');
+          // Cambiar color título
+          const serviceTitle = document.querySelector('#services-title');
+          if (serviceTitle) {
+            serviceTitle.className = `mb-16 font-normal ${serviceTitleClass[i]} text-5xl`;
+          }
+        } else {
+          li.classList.remove('active');
+        }
+      });
+    }
 
-  //   // Activar categoría según scroll
-  //   groups.forEach((group: any, i) => {
-  //     ScrollTrigger.create({
-  //       trigger: group,
-  //       start: 'top center',
-  //       end: 'bottom center',
-  //       onEnter: () => setActiveCategory(i),
-  //       onEnterBack: () => setActiveCategory(i),
-  //     });
-  //   });
-  // }
+    // Activar categoría según scroll
+    groups.forEach((group: any, i) => {
+      ScrollTrigger.create({
+        trigger: group,
+        start: 'top center',
+        end: 'bottom center',
+        onEnter: () => setActiveCategory(i),
+        onEnterBack: () => setActiveCategory(i),
+      });
+    });
+  }
 </script>
 
 <style>

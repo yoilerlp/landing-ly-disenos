@@ -31,7 +31,7 @@
   let targetRotX = initialRotX;
   let targetRotY = initialRotY;
 
-  const MAX_VERTICAL_ROT = 1; // límite vertical de inclinación
+  const MAX_VERTICAL_ROT = 0.5; // límite vertical de inclinación
   let trackingEnabled = false; // tracking solo cuando hay hover
 
   // --- Auto-rotación ---
@@ -98,13 +98,13 @@
       lastHoverTime = Date.now(); // Actualizar el tiempo al salir del hover
 
       // volver suave al estado inicial
-      targetRotX = initialRotX;
-      targetRotY = initialRotY;
+      //   targetRotX = initialRotX;
+      //   targetRotY = initialRotY;
     });
 
     // --- Mouse ---
     window.addEventListener('mousemove', (e) => {
-      if (!trackingEnabled) return;
+      //   if (!trackingEnabled) return;
 
       lastHoverTime = Date.now(); // Actualizar el tiempo con cada movimiento del mouse
       autoRotate = false; // Detener auto-rotación durante la interacción
@@ -138,7 +138,7 @@
   const animate = () => {
     requestAnimationFrame(animate);
 
-    // Verificar si han pasado 30 segundos sin hover
+    // Verificar si han pasado 10 segundos sin hover
     const timeSinceLastHover = Date.now() - lastHoverTime;
     if (timeSinceLastHover >= IDLE_TIME_MS && !trackingEnabled) {
       autoRotate = true;
@@ -148,11 +148,11 @@
       const smooth = 0.08;
 
       if (autoRotate) {
-        // Auto-rotación horizontal continua
-        model.rotation.y += 0.005; // Velocidad de rotación automática
-
-        // Mantener X en posición inicial
-        model.rotation.x += (initialRotX - model.rotation.x) * smooth;
+        // Auto-rotación horizontal continua desde la posición actual
+        model.rotation.y += smooth; // Velocidad de rotación automática
+        
+        // No interpolar X, mantener la posición actual donde quedó
+        // model.rotation.x permanece como está
       } else {
         // interpolar suavemente hacia la pose deseada
         model.rotation.x += (targetRotX - model.rotation.x) * smooth;
