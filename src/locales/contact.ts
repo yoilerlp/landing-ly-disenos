@@ -8,6 +8,11 @@ export const contactEs = {
     message: 'Mensaje',
   },
   submit: 'Enviar',
+  form: {
+    success: '¡Formulario enviado con éxito!',
+    error:
+      'Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.',
+  },
 };
 
 export const contactEn: typeof contactEs = {
@@ -20,5 +25,9 @@ export const contactEn: typeof contactEs = {
     message: 'Message',
   },
   submit: 'Submit',
+  form: {
+    success: 'Form submitted successfully!',
+    error: 'There was an error submitting the form. Please try again.',
+  },
 };
 

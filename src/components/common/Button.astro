@@ -4,7 +4,7 @@ import type { HTMLAttributes } from 'astro/types';
 
 type Props = HTMLAttributes<'button'>;
 
-const { class: className, ...rest } = Astro.props;
+const { class: className, type = 'button', ...rest } = Astro.props;
 ---
 
 <button
@@ -13,6 +13,7 @@ const { class: className, ...rest } = Astro.props;
     className
   )}
   {...rest}
+  type={type}
 >
   <slot />
 </button>

@@ -6,8 +6,12 @@ import WhatsappIcon from '@/assets/icons/whatsapp.svg';
 import FusionTowerIcon from '@/assets/icons/LogoFusionTowerSmall.svg';
 import Link from '../Link.astro';
 import { withLocale } from '@/helpers/withLocale';
+import { getLangFromUrl, useTranslationsObject } from '@/config/i18n';
 
 const currentLocale = Astro.currentLocale || 'es';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslationsObject(lang);
 ---
 
 <HeaderWrapper client:load>
@@ -21,7 +25,7 @@ const currentLocale = Astro.currentLocale || 'es';
       <WhatsappIcon />
     </a>
     <Link href={withLocale(currentLocale, '/contact')}>
-      <Button>Contáctanos</Button>
+      <Button class={'lowercase'}>{t.footer.contactUs}</Button>
     </Link>
   </div>
 </HeaderWrapper>

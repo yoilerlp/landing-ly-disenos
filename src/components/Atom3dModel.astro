@@ -18,28 +18,27 @@
   import * as THREE from 'three';
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-  let scene: THREE.Scene,
-    camera: THREE.PerspectiveCamera,
-    renderer: THREE.WebGLRenderer;
-  let model: THREE.Group | null = null;
-
-  // --- Rotación inicial del modelo ---
-  const initialRotX = Math.PI / 2; // enderezarlo
-  const initialRotY = Math.PI / 2; // que mire hacia el frente
-
-  // --- Targets que inician en la rotación inicial ---
-  let targetRotX = initialRotX;
-  let targetRotY = initialRotY;
-
-  const MAX_VERTICAL_ROT = 0.5; // límite vertical de inclinación
-  let trackingEnabled = false; // tracking solo cuando hay hover
-
-  // --- Auto-rotación ---
-  let autoRotate = false;
-  let lastHoverTime = Date.now();
-  const IDLE_TIME_MS = 10000; // 10 segundos en milisegundos
-
   const init = () => {
+    let scene: THREE.Scene,
+      camera: THREE.PerspectiveCamera,
+      renderer: THREE.WebGLRenderer;
+    let model: THREE.Group | null = null;
+
+    // --- Rotación inicial del modelo ---
+    const initialRotX = Math.PI / 2; // enderezarlo
+    const initialRotY = Math.PI / 2; // que mire hacia el frente
+
+    // --- Targets que inician en la rotación inicial ---
+    let targetRotX = initialRotX;
+    let targetRotY = initialRotY;
+
+    const MAX_VERTICAL_ROT = 0.5; // límite vertical de inclinación
+    let trackingEnabled = false; // tracking solo cuando hay hover
+
+    // --- Auto-rotación ---
+    let autoRotate = false;
+    let lastHoverTime = Date.now();
+    const IDLE_TIME_MS = 10000; // 10 segundos en milisegundos
     const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
 
     scene = new THREE.Scene();
@@ -60,19 +59,27 @@
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    // --- Luces ---
-    const modelcolor = 0x062854;
-    const dir = new THREE.DirectionalLight(modelcolor);
-    dir.position.set(2, 3, 4);
-    scene.add(dir);
-    scene.add(new THREE.AmbientLight(modelcolor));
-
     // --- Cargar modelo ---
     const loader = new GLTFLoader();
     loader.load(
       '/ft.glb',
       (gltf) => {
         model = gltf.scene;
+
+        const color = 0x131c90;
+
+        model.traverse((child) => {
+          if (child.isMesh) {
+            child.material = new THREE.MeshStandardMaterial({
+              color: color, // color base
+              emissive: color, // da un color más puro
+              emissiveIntensity: 0.2, // ajusta la pureza
+            });
+            child.castShadow = true;
+            child.receiveShadow = true;
+            child.material.needsUpdate = true;
+          }
+        });
 
         model.position.set(0, 0, 0);
         model.rotation.x = initialRotX;
@@ -132,48 +139,51 @@
       targetRotX = initialRotX + vertical;
     });
 
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      // Verificar si han pasado 10 segundos sin hover
+      const timeSinceLastHover = Date.now() - lastHoverTime;
+      if (timeSinceLastHover >= IDLE_TIME_MS && !trackingEnabled) {
+        //   autoRotate = true;
+      }
+
+      if (model) {
+        const smooth = 0.08;
+
+        if (autoRotate) {
+          // Auto-rotación horizontal continua desde la posición actual
+          model.rotation.y += smooth; // Velocidad de rotación automática
+
+          // No interpolar X, mantener la posición actual donde quedó
+          // model.rotation.x permanece como está
+        } else {
+          // interpolar suavemente hacia la pose deseada
+          model.rotation.x += (targetRotX - model.rotation.x) * smooth;
+          model.rotation.y += (targetRotY - model.rotation.y) * smooth;
+        }
+      }
+
+      renderer.render(scene, camera);
+    };
+
+    window.addEventListener('load', init);
+
+    // --- Resize handler ---
+    window.addEventListener('resize', () => {
+      const canvas = document.getElementById(
+        'hero-canvas'
+      ) as HTMLCanvasElement;
+      if (!renderer || !camera) return;
+
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    });
+
     animate();
   };
 
-  const animate = () => {
-    requestAnimationFrame(animate);
-
-    // Verificar si han pasado 10 segundos sin hover
-    const timeSinceLastHover = Date.now() - lastHoverTime;
-    if (timeSinceLastHover >= IDLE_TIME_MS && !trackingEnabled) {
-    //   autoRotate = true;
-    }
-
-    if (model) {
-      const smooth = 0.08;
-
-      if (autoRotate) {
-        // Auto-rotación horizontal continua desde la posición actual
-        model.rotation.y += smooth; // Velocidad de rotación automática
-        
-        // No interpolar X, mantener la posición actual donde quedó
-        // model.rotation.x permanece como está
-      } else {
-        // interpolar suavemente hacia la pose deseada
-        model.rotation.x += (targetRotX - model.rotation.x) * smooth;
-        model.rotation.y += (targetRotY - model.rotation.y) * smooth;
-      }
-    }
-
-    renderer.render(scene, camera);
-  };
-
-  window.addEventListener('load', init);
-
-  // --- Resize handler ---
-  window.addEventListener('resize', () => {
-    const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
-    if (!renderer || !camera) return;
-
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.updateProjectionMatrix();
-  });
-
+  init();
   document.addEventListener('astro:after-swap', init);
 </script>

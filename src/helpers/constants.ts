@@ -1,2 +1,2 @@
-export const BASE = import.meta.env.PUBLIC_REPOSITORY_PATH || '';
+export const BASE = process.env.BASE_PATH || '';
 

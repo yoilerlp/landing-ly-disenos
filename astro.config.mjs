@@ -28,7 +28,8 @@ export default defineConfig({
   site: import.meta.env.PUBLIC_SITE_URL || process.env.PUBLIC_SITE_URL,
   base:
     import.meta.env.PUBLIC_REPOSITORY_PATH ||
-    process.env.PUBLIC_REPOSITORY_PATH,
+    process.env.PUBLIC_REPOSITORY_PATH ||
+    process.env.BASE_PATH,
 
   env: {
     schema: {

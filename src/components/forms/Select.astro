@@ -1,0 +1,44 @@
+---
+import { cn } from '@/helpers/cn';
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'select'> & {
+  options?: Array<{ value: string; label: string }>;
+  placeholder?: string;
+};
+
+const {
+  class: className,
+  options,
+  placeholder,
+  ...rest
+} = Astro.props as Props;
+---
+
+<select
+  class={cn(
+    'w-full border-b border-white h-14 focus-visible:ring-0 focus:outline-none',
+    'text-white font-lexend text-base leading-6',
+    'placeholder:text-white ',
+    'placeholder:opacity-10',
+    className
+  )}
+  {...rest}
+>
+  {
+    placeholder ? (
+      <option value='' disabled selected class='opacity-50'>
+        {placeholder}
+      </option>
+    ) : null
+  }
+  {
+    options ? (
+      options.map((option) => (
+        <option value={option.value}>{option.label}</option>
+      ))
+    ) : (
+      <slot />
+    )
+  }
+</select>

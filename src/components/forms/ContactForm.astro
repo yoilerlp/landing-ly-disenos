@@ -3,18 +3,23 @@ import { getLangFromUrl, useTranslationsObject } from '@/config/i18n';
 import SectionContainer from '../common/SectionContainer.astro';
 import Input from './Input.astro';
 import Button from '../common/Button.astro';
+import Select from './Select.astro';
+import { useServiceContentOrganized } from '@/helpers/useServiceContent';
+import ContactFormWrapper from './ContactFormWrapper';
 
 const lang = getLangFromUrl(Astro.url);
 
 const t = useTranslationsObject(lang);
 
+const { serviceData } = useServiceContentOrganized(t);
+
 const requieredText = (text: string) => `${text}*`;
 ---
 
 <SectionContainer
-  class='items-center pb-14 sm:pb-20'
+  class='items-center pb-14 sm:pb-20 h-auto pt-20'
   id='contact-form-container'
-  containerClass='mt-5'
+  containerClass='!pt-5 sm:!pt-20'
 >
   <h1
     class='font-lexend uppercase text-[64px] font-normal text-text-secondary mb-20'
@@ -26,7 +31,7 @@ const requieredText = (text: string) => `${text}*`;
     </span>
   </h1>
 
-  <form action='#' method='post' class=''>
+  <ContactFormWrapper texts={t.contact.form} client:load>
     <fieldset
       class='grid grid-cols-1 gap-6 mb-7 sm:grid-cols-2 sm:gap-[74px] sm:mb-14'
     >
@@ -36,19 +41,23 @@ const requieredText = (text: string) => `${text}*`;
         type='text'
         name='name'
         minlength={2}
+        autocomplete='name'
       />
       <Input
         required
         placeholder={requieredText(t.contact.inputs.email)}
         type='email'
         name='email'
+        autocomplete='email'
       />
-      <Input
+      <Select
         required
         placeholder={requieredText(t.contact.inputs.service)}
-        type='text'
         name='service'
-        minlength={2}
+        options={serviceData.map((service) => ({
+          value: service.title,
+          label: service.title,
+        }))}
       />
       <Input
         required
@@ -58,16 +67,14 @@ const requieredText = (text: string) => `${text}*`;
         minlength={2}
       />
     </fieldset>
-    <Button class={'w-full'}>{t.contact.submit}</Button>
-  </form>
+    <Button type={'submit'} class={'w-full'}>{t.contact.submit}</Button>
+  </ContactFormWrapper>
 </SectionContainer>
 
 <style>
   :global(#contact-form-container) {
-    background-image: var(--banner-gradient);
+    /* background-image: var(--banner-gradient); */
+    background: linear-gradient(259.77deg, #051a34 6.25%, #104c9a 92.04%);
     padding-top: 104px;
-  }
-
-  :global(footer) {
   }
 </style>

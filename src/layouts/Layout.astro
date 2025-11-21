@@ -22,6 +22,8 @@ const { metadata } = Astro.props;
     <meta name='generator' content={Astro.generator} />
     <title>{metadata.title}</title>
     <meta name='description' content={metadata.description} />
+    <base href={import.meta.env.BASE_URL} />
+
     <ClientRouter />
   </head>
   <body class='antialiased font-sans min-h-svh bg-primary'>
@@ -41,9 +43,9 @@ const { metadata } = Astro.props;
     pointer-events: none;
     z-index: 9999;
     background: radial-gradient(
-      circle 800px at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
-      rgba(255, 255, 255, 0.2),
-      transparent 50%
+      circle 700px at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+      rgba(255, 255, 255, 0.1),
+      transparent 60%
     );
     opacity: 0;
     transition: opacity 0.3s ease;
