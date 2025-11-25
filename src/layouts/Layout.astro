@@ -43,10 +43,14 @@ const { metadata } = Astro.props;
     pointer-events: none;
     z-index: 9999;
     background: radial-gradient(
-      circle 700px at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
-      rgba(255, 255, 255, 0.1),
-      transparent 60%
+      circle 250px at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+      rgba(255, 255, 255, 0.2) 10%,
+      /* centro muy brillante */ rgba(255, 255, 255, 0.1) 40%,
+      /* luz suave */ rgba(255, 255, 255, 0.05) 70%,
+      /* desvaneciendo */ rgba(255, 255, 255, 0.01) 100%
+        /* borde totalmente limpio */
     );
+    background-blend-mode: lighten;
     opacity: 0;
     transition: opacity 0.3s ease;
   }

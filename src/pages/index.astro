@@ -1,0 +1,26 @@
+---
+import Banner from '@/components/Banner.astro';
+import Footer from '@/components/common/Footer.astro';
+import Header from '@/components/common/header/Header.astro';
+import DescriptionText from '@/components/DescriptionText.astro';
+import OurServices from '@/components/our-service/OurServices.astro';
+import OurWorkflowSection from '@/components/workflow/OurWorkflowSection.astro';
+
+import Layout, { type Props } from '@/layouts/Layout.astro';
+
+const metadata: Props['metadata'] = {
+  title: 'Fusion Tower',
+  description: 'Landing page for Fusion Tower project',
+  lang: 'es',
+};
+---
+
+<Layout metadata={metadata}>
+  <Header />
+  <Banner />
+  <DescriptionText />
+  <OurServices />
+  <OurWorkflowSection />
+  <Footer />
+</Layout>;
+
