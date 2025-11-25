@@ -16,11 +16,9 @@ export default defineConfig({
   i18n: {
     locales: [...ACCEPTED_LOCALES],
     defaultLocale: DEFAULT_LOCALE,
-    routing: {
-      prefixDefaultLocale: true,
-      fallbackType: 'rewrite',
-      // redirectToDefaultLocale: true,
-    },
+    // routing: {
+    //   redirectToDefaultLocale: false,
+    // },
   },
 
   integrations: [react()],
