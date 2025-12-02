@@ -9,6 +9,7 @@ import {
   useTranslationsObject,
 } from '@/config/i18n';
 import { withLocale } from '@/helpers/withLocale';
+import ModalGame from '../ModalGame';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslationsObject(lang);
@@ -17,7 +18,7 @@ const currentLocale = Astro.currentLocale || DEFAULT_LOCALE;
 ---
 
 <footer class='p-5'>
-  <section class='flex justify-between mb-12'>
+  <section class='flex justify-between mb-12 pt-4'>
     <div class='flex gap-9 items-center'>
       <Link href={withLocale(currentLocale, '/')}>{t.footer.home}</Link>
       <Link href={withLocale(currentLocale, '/contact')}
@@ -56,12 +57,28 @@ const currentLocale = Astro.currentLocale || DEFAULT_LOCALE;
     <h5 class='font-lexend text-[40px] text-secondary leading-12 mb-7'>
       {t.footer.moreBeforeYouGo}
     </h5>
-    <Button>{t.footer.showMe}</Button>
+    <Button id='showMeButton'>{t.footer.showMe}</Button>
   </section>
+
+  <ModalGame client:load />
 </footer>
 
-<style>
-  footer {
+<style is:global>
+  footer,
+  #modal-game {
     background-image: var(--bg-mesa);
   }
 </style>
+
+<script>
+  import { openModalGame } from '@/helpers/game';
+
+  const btnOpenGame = document.getElementById(
+    'showMeButton'
+  ) as HTMLButtonElement;
+  if (btnOpenGame) {
+    btnOpenGame.addEventListener('click', () => {
+      openModalGame();
+    });
+  }
+</script>
