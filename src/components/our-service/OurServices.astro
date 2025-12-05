@@ -101,9 +101,6 @@ const { serviceData, serviceImages, serviceIcons } =
   );
 
   function setActiveCategory(index: number) {
-    console.log({
-      index,
-    });
     categories.forEach((li, i) => {
       if (i === index) {
         li.classList.add('active');
@@ -137,7 +134,7 @@ const { serviceData, serviceImages, serviceIcons } =
         ease: 'none',
         scrollTrigger: {
           trigger: sectionId,
-          start: 'top 60px',
+          start: 'top 100px',
           // end: 'bottom center',
           end: () =>
             `+=${scrollContainer.scrollHeight - cardEstimatedHeight * 2}`,
@@ -163,9 +160,6 @@ const { serviceData, serviceImages, serviceIcons } =
   function initMobileScroll() {
     const groups = gsap.utils.toArray<HTMLElement>('.service-category-group');
     const lastGroup = groups[groups.length - 1];
-
-    // Limpiamos ScrollTriggers previos
-    ScrollTrigger.getAll().forEach((st) => st.kill());
 
     gsap.to(section, {
       y: () => -(section.scrollHeight - window.innerHeight + 100),
