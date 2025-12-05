@@ -8,11 +8,19 @@ type Props = {
   class?: string;
 };
 
-const { title, description, variant = 'primary', class: customClass } = Astro.props;
+const {
+  title,
+  description,
+  variant = 'primary',
+  class: customClass,
+} = Astro.props;
 ---
 
 <article
-  class={cn('bg-bg rounded-[20px] border border-border w-full h-[306px] overflow-hidden flex flex-col justify-between', customClass)}
+  class={cn(
+    'bg-bg rounded-[20px] border border-border w-full h-60 xl:h-[306px] overflow-hidden flex flex-col justify-between',
+    customClass
+  )}
 >
   <!--  Card icon -->
   <div
@@ -28,12 +36,12 @@ const { title, description, variant = 'primary', class: customClass } = Astro.pr
 
   <!-- Card content -->
   <div>
-    <h4 class='text-secondary font-medium text-xl mb-2'>
+    <h4 class='text-secondary font-medium text-[12px] xl:text-xl mb-2'>
       {title}
     </h4>
 
     <p
-      class='font-lexend-deca font-light text-base text-white text-ellipsis leading-6'
+      class='font-lexend-deca font-light text-[10px] xl:text-base text-white text-ellipsis xl:leading-6'
       title={description}
     >
       {description}

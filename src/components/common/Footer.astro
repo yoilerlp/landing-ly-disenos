@@ -3,6 +3,8 @@ import Link from '@/components/common/Link.astro';
 import Button from '@/components/common/Button.astro';
 import { icons } from '@/assets';
 import FusionTowerFooter from '@/assets/images/FusionTowerFooter.svg';
+import FusionTowerFooterMobileOne from '@/assets/icons/FusionTowerFooterMobile1.svg';
+import FusionTowerFooterMobileTwo from '@/assets/icons/FusionTowerFooterMobile2.svg';
 import {
   DEFAULT_LOCALE,
   getLangFromUrl,
@@ -18,7 +20,9 @@ const currentLocale = Astro.currentLocale || DEFAULT_LOCALE;
 ---
 
 <footer class='p-5'>
-  <section class='flex justify-between mb-12 pt-4'>
+  <section
+    class='flex flex-col gap-[30px] xl:flex-row justify-between items-center mb-12 pt-4'
+  >
     <div class='flex gap-9 items-center'>
       <Link href={withLocale(currentLocale, '/')}>{t.footer.home}</Link>
       <Link href={withLocale(currentLocale, '/contact')}
@@ -40,21 +44,29 @@ const currentLocale = Astro.currentLocale || DEFAULT_LOCALE;
   </section>
 
   <section class='px-3 mb-[70px]'>
-    <FusionTowerFooter class='w-full h-auto' />
+    <FusionTowerFooter class='w-full h-auto hidden xl:block' />
+    <div class='flex flex-col xl:hidden'>
+      <FusionTowerFooterMobileOne />
+      <FusionTowerFooterMobileTwo />
+    </div>
   </section>
 
-  <section class='flex justify-between items-center mb-11'>
+  <section
+    class='flex flex-col max-sm:items-center max-sm:text-center xl:flex-row justify-between items-center mb-11'
+  >
     <p
-      class='font-lexend-deca font-medium text-[16px] uppercase leading-6 text-secondary'
+      class='font-lexend-deca font-medium max-sm:text-[10px] text-[16px] uppercase leading-6 text-secondary'
     >
       {t.footer.copyRight}
     </p>
 
-    <Link href='#'>{t.footer.privacyPolicy}</Link>
+    <Link class='max-sm:text-[12px]' href='#'>{t.footer.privacyPolicy}</Link>
   </section>
 
   <section class='h-[400px] flex flex-col items-center pt-[120px]'>
-    <h5 class='font-lexend text-[40px] text-secondary leading-12 mb-7'>
+    <h5
+      class='font-lexend max-sm:text-[32px] text-center text-[40px] text-secondary leading-12 mb-7'
+    >
       {t.footer.moreBeforeYouGo}
     </h5>
     <Button id='showMeButton'>{t.footer.showMe}</Button>

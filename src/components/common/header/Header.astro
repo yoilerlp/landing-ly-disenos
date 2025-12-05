@@ -4,9 +4,12 @@ import HeaderWrapper from '@/components/common/header/HeaderWrapper.tsx';
 
 import WhatsappIcon from '@/assets/icons/whatsapp.svg';
 import FusionTowerIcon from '@/assets/icons/LogoFusionTowerSmall.svg';
+import FusionTowerIconMobile from '@/assets/icons/LogoMobile.png';
+
 import Link from '../Link.astro';
 import { withLocale } from '@/helpers/withLocale';
 import { getLangFromUrl, useTranslationsObject } from '@/config/i18n';
+import { Image } from 'astro:assets';
 
 const currentLocale = Astro.currentLocale || 'es';
 
@@ -15,8 +18,9 @@ const t = useTranslationsObject(lang);
 ---
 
 <HeaderWrapper client:load>
-  <FusionTowerIcon width={254} height={50} />
-  <div class='flex items-center gap-4'>
+  <FusionTowerIcon width={254} height={50} class='hidden xl:block' />
+  <Image src={FusionTowerIconMobile} alt='' class='xl:hidden' />
+  <div class='flex items-center gap-4 max-sm:scale-[0.8]'>
     <a
       href='https://wa.me/573186953119'
       target='_blank'

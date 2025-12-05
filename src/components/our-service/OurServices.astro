@@ -16,21 +16,23 @@ const { serviceData, serviceImages, serviceIcons } =
 ---
 
 <SectionContainer id='our-services' class='pt-24'>
-  <div class='w-full grid grid-cols-2 gap-4 sm:gap-11'>
+  <div class='w-full xl:grid grid-cols-2 gap-4 sm:gap-11'>
     <!-- Col tabs -->
     <div id='list-category'>
-      <p class='font-light text-2xl leading-[30px] text-text-gray mb-2'>
+      <p
+        class='font-light text-xl xl:text-2xl leading-[30px] text-text-gray mb-2'
+      >
         {t?.services?.title}
       </p>
 
       <h3
         id='services-title'
-        class='mb-16 font-normal text-secondary text-5xl leading-12 uppercase transition-all'
+        class='mb-16 font-normal text-secondary text-[32px] xl:text-5xl leading-12 uppercase transition-all'
         set:html={getDescriptionLines(t?.services?.description)}
       />
 
       <!-- categorias -->
-      <ul class='[&_li]:pl-7' role='list'>
+      <ul class='[&_li]:pl-7 hidden xl:block' role='list'>
         {
           serviceData.map((service) => (
             <ServiceCategory label={service.title} />
@@ -41,15 +43,18 @@ const { serviceData, serviceImages, serviceIcons } =
 
     <!-- Cards -->
 
-    <div class='h-screen' id='service-cards-list'>
+    <div class='h-screen max-xl:relative' id='service-cards-list'>
       {
         serviceData.map((serviceSection, sectionIdx) => (
-          <div class='service-category-group' data-category={sectionIdx + 1}>
+          <div
+            class='max-xl:absolute max-xl:mb-20 max-xl:bg-bg service-category-group'
+            data-category={sectionIdx + 1}
+          >
             {serviceSection.services.map((service, sIdx) => {
               const imgSrc = serviceImages[sectionIdx][sIdx];
               const Icon = serviceIcons[sectionIdx][sIdx];
               return (
-                <div class='flex gap-4 mb-6 even:flex-row-reverse'>
+                <div class='flex gap-4 mb-6 even:flex-row-reverse card-item'>
                   <ServiceImgCard
                     class='w-1/2'
                     imageSrc={imgSrc}
@@ -79,7 +84,16 @@ const { serviceData, serviceImages, serviceIcons } =
 
   gsap.registerPlugin(ScrollTrigger);
 
+  const ourServices = document.querySelector('#our-services') as HTMLElement;
+  const section = document.querySelector('#service-cards-list') as HTMLElement;
+
+  const cards = gsap.utils.toArray<HTMLElement>('.service-category-group');
+
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
   function init() {
+    if (isMobile) return;
+
     const sectionId = '#our-services';
     const scrollContainer = document.querySelector('#service-cards-list');
     const categories = document.querySelectorAll(
@@ -138,7 +152,44 @@ const { serviceData, serviceImages, serviceIcons } =
       });
     }
   }
-  init();
+
+  function initMobileScroll(section: HTMLElement, items: HTMLElement[]) {
+    if (!isMobile) return;
+    // Initial states
+    items.forEach((item, index) => {
+      if (index !== 0) {
+        gsap.set(item, { yPercent: 110 });
+      }
+    });
+
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: ourServices,
+        pin: true,
+        start: 'top top',
+        end: () => `+=${items.length * 90}%`,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        // markers: true,
+      },
+      defaults: { ease: 'none' },
+    });
+    items.forEach((item, index) => {
+      timeline.to(item, {
+        scale: 1,
+        borderRadius: '10px',
+      });
+
+      timeline.to(
+        items[index + 1],
+        {
+          yPercent: 0,
+        },
+        '<'
+      );
+    });
+  }
+  isMobile ? initMobileScroll(section, cards) : init();
   document.addEventListener('astro:after-swap', init);
 </script>
 

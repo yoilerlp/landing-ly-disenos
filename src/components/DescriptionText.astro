@@ -7,11 +7,11 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<SectionContainer id='text-description'>
+<SectionContainer id='text-description' class='max-xl:h-[90vh]'>
   <div class='max-w-5xl mx-auto'>
     <h2
       id='test-text'
-      class='font-lexend-deca text-[40px] leading-[63px] text-center text-white/50'
+      class='font-lexend-deca text-2xl leading-9 md:text-[40px] md:leading-[63px] text-center text-white/50'
     >
       {t('description.text')}
     </h2>

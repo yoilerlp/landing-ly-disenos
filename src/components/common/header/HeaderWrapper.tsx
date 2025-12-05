@@ -18,9 +18,9 @@ const HeaderWrapper = ({ children, className }: Props) => {
     <header className={cn('w-full fixed flex justify-center z-50', className)}>
       <div
         className={cn(
-          'w-full flex justify-between items-center px-14 py-6 transition-all duration-300 will-change-transform',
+          'w-full flex justify-between items-center px-2 xl:px-14 py-6 transition-all duration-300 will-change-transform',
           {
-            'rounded-[40px] py-4 w-[90%] bg-white/10 backdrop-blur-[32px] md:translate-y-5':
+            'rounded-[40px] py-4 w-[95%] bg-white/10 backdrop-blur-[32px] translate-y-2 md:translate-y-5':
               scrolled,
             'border-b border-white/20 shadow-lg': scrolled,
           }

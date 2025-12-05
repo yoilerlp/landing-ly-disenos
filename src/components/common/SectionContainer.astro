@@ -18,7 +18,7 @@ const {
 
 <section
   class={cn(
-    'section-container h-svh relative w-full flex items-center',
+    'section-container h-auto xl:h-svh relative w-full flex items-center',
     className
   )}
   id={id}
@@ -26,7 +26,6 @@ const {
   <div class={cn('container', containerClass)} id={idContainer}>
     <slot />
   </div>
-  <!-- optinal slop Atom -->
   {Astro.slots.atom ? <slot name='atom' /> : null}
 </section>
 
