@@ -1,4 +1,6 @@
 ---
+import { cn } from '@/helpers/cn';
+
 export type Props = {
   class?: string;
   label: string;
@@ -8,9 +10,13 @@ const { class: className = '', label } = Astro.props;
 ---
 
 <li
-  class='h-28 border-l-4 border-l-grayThree flex items-center will-change-[border-left-color] service-category-item'
+  class={cn(
+    'h-28 border-l-4 border-l-grayThree flex items-center will-change-[border-left-color] service-category-item',
+    'max-xl:hidden max-xl:h-9 max-xl:max-h-9 max-xl:overflow-hidden',
+    className
+  )}
 >
-  <span class='text-grayTwo text-4xl'>{label}</span>
+  <span class='text-grayTwo max-xl:line-clamp-1 text-[28px] xl:text-4xl'>{label}</span>
 </li>
 
 <style>
@@ -20,6 +26,7 @@ const { class: className = '', label } = Astro.props;
 
   li.active {
     border-left-color: var(--color-secondary);
+    display: flex;
   }
 
   li.active:nth-child(1) {
