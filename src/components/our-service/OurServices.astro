@@ -162,8 +162,10 @@ const { serviceData, serviceImages, serviceIcons } =
 
   function initMobileScroll() {
     const groups = gsap.utils.toArray<HTMLElement>('.service-category-group');
+    const lastGroup = groups[groups.length - 1];
 
     // Limpiamos ScrollTriggers previos
+    ScrollTrigger.getAll().forEach((st) => st.kill());
 
     gsap.to(section, {
       y: () => -(section.scrollHeight - window.innerHeight + 100),
@@ -171,7 +173,14 @@ const { serviceData, serviceImages, serviceIcons } =
       scrollTrigger: {
         trigger: ourServices,
         start: `top top`,
-        end: () => `bottom bottom`,
+        // El final es cuando el último grupo está visible en un 70% de la pantalla
+        end: () => {
+          // Posición del último grupo en el contenedor
+          const lastGroupTop = lastGroup.offsetTop;
+          // Para que esté al 70% visible, su top debe estar a -30% del alto de la pantalla
+          const endPosition = lastGroupTop - window.innerHeight * 0.3;
+          return `+=${endPosition}`;
+        },
         scrub: 1,
         pin: true,
         invalidateOnRefresh: true,
