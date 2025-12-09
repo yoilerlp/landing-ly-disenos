@@ -1,7 +1,7 @@
 import { BASE } from '../helpers/constants';
 import { localesText } from './locales';
-
-export const ACCEPTED_LOCALES = ['es', 'en'] as const;
+export const DEFAULT_DOMAIN_URL = 'https://fusiontower.net';
+export const ACCEPTED_LOCALES = ['en', 'es'] as const;
 
 export const DEFAULT_LOCALE = ACCEPTED_LOCALES[0];
 

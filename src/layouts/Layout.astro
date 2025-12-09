@@ -1,19 +1,46 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
+import { ACCEPTED_LOCALES, DEFAULT_LOCALE } from '@/config/i18n';
+import { withLocale } from '@/helpers/withLocale';
 
 export type Props = {
   metadata: {
     title: string;
     description: string;
     lang: string;
+    keywords?: string;
+    author?: string;
+    publisher?: string;
   };
 };
 
 const { metadata } = Astro.props;
+
+const canonicalURL = new URL(Astro.url).href;
+
+const url = Astro.url;
+const currentLang = Astro.currentLocale || DEFAULT_LOCALE;
+const baseOrigin = url.origin;
+const pathname = url.pathname;
+
+const getUrl = (locale: string) =>
+  baseOrigin + pathname.replace(`/${currentLang}/`, `/${locale}/`);
+
+const removeLocaleFromPath = (path: string, locale: string) => {
+  const localePrefix = `/${locale}/`;
+  if (path.startsWith(localePrefix)) {
+    return path.slice(localePrefix.length - 1);
+  }
+  return path;
+};
+// Generar paths por idioma
+const hreflangs = ACCEPTED_LOCALES.map((locale) => ({
+  locale,
+  url: getUrl(locale),
+}));
 ---
 
-<!doctype html>
 <html lang={metadata.lang}>
   <head>
     <meta charset='UTF-8' />
@@ -22,7 +49,28 @@ const { metadata } = Astro.props;
     <meta name='generator' content={Astro.generator} />
     <title>{metadata.title}</title>
     <meta name='description' content={metadata.description} />
+    {metadata.keywords && <meta name='keywords' content={metadata.keywords} />}
+    {metadata.author && <meta name='author' content={metadata.author} />}
+    {
+      metadata.publisher && (
+        <meta name='publisher' content={metadata.publisher} />
+      )
+    }
+
+    <!-- canonical URL -->
+    <link rel='canonical' href={canonicalURL} />
     <base href={import.meta.env.BASE_URL} />
+
+    <!-- multilingual hreflang links -->
+    {
+      hreflangs.map((h) => (
+        <link rel='alternate' hreflang={h.locale} href={h.url} />
+      ))
+    }
+
+    <link rel='alternate' hreflang='x-default' href={getUrl(DEFAULT_LOCALE)} />
+
+    <link rel='sitemap' href='/sitemap-index.xml' />
 
     <ClientRouter />
   </head>

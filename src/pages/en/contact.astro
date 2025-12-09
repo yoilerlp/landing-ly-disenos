@@ -4,20 +4,17 @@ import Header from '@/components/common/header/Header.astro';
 import ContactForm from '@/components/forms/ContactForm.astro';
 
 import Layout, { type Props } from '@/layouts/Layout.astro';
+import { DEFAULT_LOCALE, type Locale } from '@/config/i18n';
+import { baseMetaData } from '@/helpers/SEO';
 
-import { ACCEPTED_LOCALES } from '@/config/i18n';
+const currentLocale = (Astro.currentLocale as Locale) || DEFAULT_LOCALE;
 
-// export async function getStaticPaths() {
-//   return ACCEPTED_LOCALES.map((l) => {
-//     return { params: { locale: l } };
-//   });
-// }
-const { locale } = Astro.params;
+const baseMeta = baseMetaData[currentLocale] || baseMetaData.en;
 
 const metadata: Props['metadata'] = {
-  title: 'Fusion Tower - Contact',
-  description: 'Landing page for Fusion Tower project',
-  lang: locale!,
+  ...baseMeta,
+  title: `Contact - ${baseMeta.title}`,
+  lang: currentLocale,
 };
 ---
 

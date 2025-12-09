@@ -5,7 +5,13 @@ import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
 
-import { ACCEPTED_LOCALES, DEFAULT_LOCALE } from './src/config/i18n';
+import {
+  ACCEPTED_LOCALES,
+  DEFAULT_LOCALE,
+  DEFAULT_DOMAIN_URL,
+} from './src/config/i18n';
+
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,9 +27,12 @@ export default defineConfig({
     // },
   },
 
-  integrations: [react()],
+  integrations: [react(), sitemap()],
 
-  site: import.meta.env.PUBLIC_SITE_URL || process.env.PUBLIC_SITE_URL,
+  site:
+    import.meta.env.PUBLIC_SITE_URL ||
+    process.env.PUBLIC_SITE_URL ||
+    DEFAULT_DOMAIN_URL,
   base:
     import.meta.env.PUBLIC_REPOSITORY_PATH ||
     process.env.PUBLIC_REPOSITORY_PATH ||

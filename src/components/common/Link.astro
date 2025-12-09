@@ -7,7 +7,12 @@ type Props = HTMLAttributes<'a'> & {
   class?: string;
 };
 
-const { href, class: className = '' } = Astro.props;
+const {
+  href,
+  class: className = '',
+  rel = 'noopener noreferrer',
+  ...rest
+} = Astro.props;
 ---
 
 <a
@@ -16,6 +21,8 @@ const { href, class: className = '' } = Astro.props;
     'font-lexend-deca font-medium text-[16px] uppercase leading-6 text-secondary',
     className
   )}
+  rel={rel}
+  {...rest}
 >
   <slot />
 </a>

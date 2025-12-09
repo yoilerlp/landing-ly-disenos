@@ -1,0 +1,21 @@
+# Archivo robots.txt para Fusion Tower Landing Page
+User-agent: *
+# --- PERMISOS ---
+Allow: /
+# --- BLOQUEOS PREVENTIVOS (DISALLOW) ---
+Disallow: /admin/
+Disallow: /login/
+Disallow: /backend/
+# Bloquear parámetros específicos que generan contenido duplicado sin valor SEO.
+# NOTA: No bloqueamos UTMs de marketing.
+Disallow: /*?sort=
+Disallow: /*&sort=
+Disallow: /*?filter=
+Disallow: /*&filter=
+Disallow: /*?session=
+Disallow: /*?sid=
+# Bloquear resultados de búsqueda interna (si se implementa a futuro)
+Disallow: /search/
+Disallow: /*?q=
+# --- MAPA DEL SITIO ---
+Sitemap: https://fusiontower.net/sitemap-index.xml

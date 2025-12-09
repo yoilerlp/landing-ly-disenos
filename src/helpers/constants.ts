@@ -1,2 +1,2 @@
-export const BASE = process.env.BASE_PATH || '';
+export const BASE = process?.env?.BASE_PATH || '';
 
