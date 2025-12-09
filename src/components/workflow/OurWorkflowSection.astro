@@ -3,28 +3,79 @@ import { useWorkFlowContentOrganized } from '@/helpers/useWorkFlowContent';
 import WorkFlowCard from './WorkFlowCard.astro';
 import { getLangFromUrl, useTranslationsObject } from '@/config/i18n';
 import { getDescriptionLines } from '@/helpers/text';
+import { cn } from '@/helpers/cn';
+import { groupBy } from '@/helpers/ultils';
 
 const lang = getLangFromUrl(Astro.url);
 
 const t = useTranslationsObject(lang);
 
 const { workFlowSteps, workFlowIcons } = useWorkFlowContentOrganized(t);
+
+const workFlowStepsGrouped = groupBy(workFlowSteps, 2);
 ---
 
-<section class='flex-col p-5 h-svh' id='our-workflow'>
+<section class='flex-col p-2 sm:p-5 h-svh max-xl:mb-3' id='our-workflow'>
   <div
-    class='p-16! overflow-hidden border-border h-[700px] bg-blue-medium border rounded-[20px]'
+    class={cn(
+      'p-16! overflow-hidden border-border h-[700px] bg-blue-medium border rounded-[20px]',
+      'max-sm:h-auto! max-sm:p-0! max-sm:border-0! max-sm:bg-transparent'
+    )}
   >
     <h4
-      class='font-lexend font-light uppercase leading-10 text-[32px] text-text-gray mb-24'
+      class='font-lexend font-light uppercase leading-10 text-[32px] text-text-gray mb-24 max-sm:hidden'
       set:html={getDescriptionLines(t?.workflow?.title)}
     />
 
-    <div class='flex gap-32' id='workflow-steps-list'>
+    <div class='hidden sm:flex gap-32' id='workflow-steps-list'>
       {
         workFlowSteps.map((step, idx) => {
           const Icon = workFlowIcons[idx];
           return <WorkFlowCard step={step} stepNumber={idx + 1} Icon={Icon} />;
+        })
+      }
+    </div>
+
+    <div class='sm:hidden flex gap-3.5' id='workflow-steps-list-mobile'>
+      {
+        workFlowStepsGrouped.map((group, groupIdx) => {
+          const groupSize = group.length;
+          const allIcons = workFlowIcons.slice(
+            groupIdx * 2,
+            groupIdx * 2 + groupSize
+          );
+
+          return (
+            <div
+              class={cn(
+                'w-[300px] shrink-0 p-6 pb-12 flex flex-col gap-5 border-border bg-blue-medium border rounded-[20px]'
+              )}
+            >
+              {group.map((step, idx) => {
+                const globalIdx = groupIdx * 2 + idx;
+                return (
+                  <div>
+                    <WorkFlowCard
+                      class='odd:mb-6'
+                      step={step}
+                      stepNumber={globalIdx + 1}
+                    />
+                    {idx === 0 && group.length > 1 ? (
+                      <div class='h-24 border border-border rounded-[20px] bg-primary flex items-center justify-evenly'>
+                        {allIcons?.map((Icon, iconIdx) => (
+                          <img
+                            src={Icon.src}
+                            alt={`Step ${globalIdx + iconIdx + 1} Icon`}
+                            class="max-w-[60px] max-h-[66px]"
+                          />
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
+          );
         })
       }
     </div>
@@ -37,10 +88,14 @@ const { workFlowSteps, workFlowIcons } = useWorkFlowContentOrganized(t);
 
   gsap.registerPlugin(ScrollTrigger);
 
+  const isMobile = window.matchMedia('(max-width: 640px)').matches;
+
   function init() {
     const section = document.querySelector('#our-workflow');
 
-    const container = document.querySelector('#workflow-steps-list');
+    const container = document.querySelector(
+      isMobile ? '#workflow-steps-list-mobile' : '#workflow-steps-list'
+    );
 
     if (section && container) {
       const totalScrollWidth = container.scrollWidth;

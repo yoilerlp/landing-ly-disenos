@@ -1,6 +1,5 @@
 ---
 import { cn } from '@/helpers/cn';
-import Ellipse from '@/assets/icons/Ellipse.svg';
 
 export type WorkFlowCardProps = {
   step: {
@@ -9,26 +8,27 @@ export type WorkFlowCardProps = {
     description: string;
   };
   Icon: any;
+  class?: string;
 };
 
-const { step, Icon } = Astro.props as WorkFlowCardProps;
+const { step, Icon, class: className } = Astro.props as WorkFlowCardProps;
 ---
 
-<article class={cn('flex items-center gap-28')}>
-  <section class='w-[360px]'>
+<article class={cn('flex items-center gap-28', className)}>
+  <section class='w-full sm:w-[360px]'>
     <p
-      class='font-lexend font-light text-xl leading-6 uppercase text-text-gray mb-3'
+      class='font-lexend font-light text-base mb-1.5 sm:text-xl sm:leading-6 uppercase text-text-gray sm:mb-3'
     >
       {step.label}
     </p>
 
     <p
-      class='font-lexend font-light text-2xl leading-[30px] uppercase text-secondary mb-[22px]'
+      class='font-lexend font-light text-[21px] mb-3 leading-normal sm:text-2xl sm:leading-[30px] uppercase text-secondary sm:mb-[22px]'
     >
       {step.title}
     </p>
 
-    <p class='font-lexend-deca font-light text-xl text-white'>
+    <p class='font-lexend-deca font-light text-[14px] sm:text-xl text-white'>
       {step.description}
     </p>
   </section>

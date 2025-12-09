@@ -22,28 +22,7 @@ function ModalGame() {
 
   // Bloquear scroll externo cuando el modal está abierto
   useEffect(() => {
-    if (isOpen) {
-      // Guardar posición actual del scroll
-      const scrollY = window.scrollY;
-      
-      // Bloquear scroll del body
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      document.body.style.height = '100vh';
-    } else {
-      // Restaurar scroll cuando se cierra
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.height = '';
-      
-      // Restaurar la posición exacta del scroll
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
   }, [isOpen]);
 
   if (!isOpen) return null;
