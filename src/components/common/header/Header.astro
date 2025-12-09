@@ -10,6 +10,7 @@ import Link from '../Link.astro';
 import { withLocale } from '@/helpers/withLocale';
 import { getLangFromUrl, useTranslationsObject } from '@/config/i18n';
 import { Image } from 'astro:assets';
+import LangSwitch from '../LangSwitch.astro';
 
 const currentLocale = Astro.currentLocale || 'es';
 
@@ -17,9 +18,14 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslationsObject(lang);
 ---
 
+<LangSwitch slot={'langSwitch'} />
 <HeaderWrapper client:load>
   <FusionTowerIcon width={254} height={50} class='hidden xl:block' />
-  <Image src={FusionTowerIconMobile} alt='Fusion Tower Mobile Logo' class='xl:hidden' />
+  <Image
+    src={FusionTowerIconMobile}
+    alt='Fusion Tower Mobile Logo'
+    class='xl:hidden'
+  />
   <div class='flex items-center gap-4 max-sm:scale-[0.8]'>
     <a
       href='https://wa.me/573186953119'

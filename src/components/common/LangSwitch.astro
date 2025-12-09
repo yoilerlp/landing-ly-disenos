@@ -1,0 +1,60 @@
+---
+import Select from '../forms/Select.astro';
+import { icons } from '../../assets/index.ts';
+import { ACCEPTED_LOCALES, DEFAULT_LOCALE } from '@/config/i18n';
+
+const lang = Astro.currentLocale || DEFAULT_LOCALE;
+
+const { SelectIcon } = icons;
+---
+
+<section class='h-6 bg-bg flex gap-2 justify-end items-center pl-2.5 px-2.5'>
+  <span
+    class='cursor-pointer font-lexend-deca font-medium text-xs text-secondary'
+  >
+    {lang.toUpperCase()}
+  </span>
+
+  <div class='relative flex justify-center items-center'>
+    <span class='absolute pointer-events-none'>
+      <SelectIcon />
+    </span>
+    <Select
+      value={null}
+      class='w-[13px] h-auto text-transparent border-none!'
+      id={'lang'}
+      options={ACCEPTED_LOCALES.map((locale) => ({
+        label: locale.toUpperCase(),
+        value: locale,
+        selected: locale === lang,
+      }))}
+    />
+  </div>
+</section>
+
+<script>
+  const ACCEPTED_LOCALES = ['es', 'en'];
+
+  function setupLangSelect() {
+    const select = document.querySelector('#lang');
+    if (!select) return;
+
+    select.addEventListener('change', () => {
+      const selectedLang = select.value;
+      const currentPath = window.location.pathname;
+      const pathSegments = currentPath.split('/').filter(Boolean);
+
+      if (ACCEPTED_LOCALES.includes(pathSegments[0])) {
+        pathSegments[0] = selectedLang;
+      } else {
+        pathSegments.unshift(selectedLang);
+      }
+
+      const newPath = '/' + pathSegments.join('/');
+      window.location.href = newPath + window.location.search;
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupLangSelect);
+  // necesario para navegación entre páginas
+</script>

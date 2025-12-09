@@ -30,6 +30,7 @@ import Ellipse from './icons/Ellipse.svg';
 import FacebookIcon from './icons/Facebook.svg';
 import InstagramIcon from './icons/Instagram.svg';
 import LinkedinIcon from './icons/Linkedin.svg';
+import SelectIcon from './icons/SelectIcon.svg';
 
 const imagesServices = {
   CalendyDesktop,
@@ -62,6 +63,7 @@ export const icons = {
   TresEllipseWithTresAros,
   TresEllipseWithTwoAros,
   Ellipse,
+  SelectIcon,
 };
 export const images = {
   services: imagesServices,

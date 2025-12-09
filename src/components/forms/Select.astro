@@ -3,7 +3,7 @@ import { cn } from '@/helpers/cn';
 import type { HTMLAttributes } from 'astro/types';
 
 type Props = HTMLAttributes<'select'> & {
-  options?: Array<{ value: string; label: string }>;
+  options?: Array<{ value: string; label: string; selected?: boolean }>;
   placeholder?: string;
 };
 
@@ -35,7 +35,9 @@ const {
   {
     options ? (
       options.map((option) => (
-        <option value={option.value}>{option.label}</option>
+        <option selected={option.selected} value={option.value}>
+          {option.label}
+        </option>
       ))
     ) : (
       <slot />
