@@ -60,7 +60,11 @@ const currentLocale = Astro.currentLocale || DEFAULT_LOCALE;
       {t.footer.copyRight}
     </p>
 
-    <Link class='max-sm:text-[12px]' href='#'>{t.footer.privacyPolicy}</Link>
+    <Link
+      class='max-sm:text-[12px]'
+      href={withLocale(currentLocale, '/privacy')}
+      >{t.footer.privacyPolicy}</Link
+    >
   </section>
 
   <section class='h-[400px] flex flex-col items-center pt-[120px]'>

@@ -1,0 +1,44 @@
+---
+import SectionContainer from '@/components/common/SectionContainer.astro';
+import Prose from '@/components/common/Prose.astro';
+
+type Props = {
+  firstTitle: string;
+  secondTitle: string;
+};
+
+const { firstTitle, secondTitle } = Astro.props;
+---
+
+<div
+  class='privacy-banner flex flex-col items-center justify-center h-[250px] sm:h-[360px]'
+>
+  <h1
+    class='font-lexend-exa text-2xl sm:text-[64px] text-secondary uppercase text-center'
+  >
+    <span>{firstTitle}</span>
+    <br />
+    <span class='sm:ml-[200px]'>{secondTitle}</span>
+  </h1>
+</div>
+<SectionContainer
+  class='privacy-policy items-center pb-14 sm:pb-20 h-auto! pt-20'
+  containerClass='!pt-5 flex flex-col items-center'
+>
+  <Prose>
+    <slot />
+  </Prose>
+</SectionContainer>
+
+<style>
+  :global(.privacy-policy) {
+    background-image: var(--bg-mesa);
+  }
+
+  .privacy-banner {
+    background-image: var(--bg-mesa), var(--banner-gradient);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+</style>

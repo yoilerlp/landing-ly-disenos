@@ -1,0 +1,259 @@
+---
+import Header from '@/components/common/header/Header.astro';
+import Layout, { type Props } from '@/layouts/Layout.astro';
+import Footer from '@/components/common/Footer.astro';
+import PrivacyWrapper from '@/components/privacy/PrivacyWrapper.astro';
+
+import { baseMetaData } from '@/helpers/SEO';
+import { DEFAULT_LOCALE, type Locale } from '@/config/i18n';
+
+const currentLocale = (Astro.currentLocale as Locale) || DEFAULT_LOCALE;
+
+const baseMeta = baseMetaData[currentLocale] || baseMetaData.en;
+
+const metadata: Props['metadata'] = {
+  ...baseMeta,
+  title: `Política de Privacidad - ${baseMeta.title}`,
+  lang: currentLocale,
+};
+---
+
+<Layout metadata={metadata}>
+  <Header />
+
+  <PrivacyWrapper firstTitle='POLÍTICA DE' secondTitle='PRIVACIDAD'>
+    <p><strong>Última actualización:</strong> 26 de noviembre de 2025</p>
+    <p>
+      En <strong>Fusion Tower</strong> ("nosotros" , "nuestro" o "la Compañía"),
+      estamos comprometidos con la protección de la privacidad y la seguridad de
+      los datos personales de nuestros usuarios, clientes potenciales y visitantes
+      de nuestro sitio web (el "Sitio").
+    </p>
+    <p>
+      Esta Política de Privacidad describe cómo recopilamos, utilizamos,
+      almacenamos, compartimos y protegemos la información personal que usted
+      nos proporciona al interactuar con nuestro Sitio y nuestros servicios
+      profesionales.
+    </p>
+    <p>
+      Esta política ha sido desarrollada para dar cumplimiento a las normativas
+      vigentes, incluyendo la Ley 1581 de 2012 y el Decreto 1377 de 2013 de la
+      República de Colombia, así como las regulaciones de privacidad aplicables
+      en los Estados Unidos.
+    </p>
+    <p>
+      Al utilizar nuestro Sitio o al proporcionarnos voluntariamente su
+      información, usted acepta las prácticas descritas en esta política y
+      otorga su consentimiento expreso para el tratamiento de sus datos
+      personales conforme a los términos aquí establecidos.
+    </p>
+    <h2>1. Responsable del Tratamiento</h2>
+    <p>
+      El responsable del tratamiento de los datos personales recolectados a
+      través de este Sitio es Fusion Tower. Para cualquier asunto relacionado
+      con la privacidad de sus datos, puede contactarnos a través del correo
+      electrónico: <a href='mailto:alex@fusiontower.net'>alex@fusiontower.net</a
+      >.
+    </p>
+    <h2>2. Información que Recopilamos</h2>
+    <p>
+      Podemos recopilar dos tipos de información de los usuarios de nuestro
+      Sitio:
+    </p>
+    <h3>2.1. Información de Identificación Personal (IIP)</h3>
+    <p>
+      Es aquella información que usted nos proporciona voluntariamente y que
+      permite identificarlo directa o indirectamente. Esto ocurre principalmente
+      cuando usted utiliza nuestros formularios de contacto (como "Hablemos de
+      Tu Proyecto"), solicita información sobre servicios o se suscribe a
+      boletines. La IIP que podemos recolectar incluye, pero no se limita a:
+    </p>
+    <ul>
+      <li>Nombre completo.</li>
+      <li>Dirección de correo electrónico corporativo o personal.</li>
+      <li>Número de teléfono.</li>
+      <li>Nombre de la empresa u organización que representa.</li>
+      <li>Detalles sobre su proyecto o necesidades comerciales.</li>
+    </ul>
+    <h3>2.2. Información No Personal y Datos de Navegación</h3>
+    <p>
+      Al igual que la mayoría de los sitios web, recopilamos automáticamente
+      cierta información técnica cuando usted visita nuestro Sitio. Esta
+      información no lo identifica personalmente de forma directa, pero es útil
+      para mejorar su experiencia y analizar el rendimiento del Sitio. Esto
+      puede incluir:
+    </p>
+    <ul>
+      <li>Dirección IP.</li>
+      <li>Tipo y versión del navegador.</li>
+      <li>Sistema operativo del dispositivo.</li>
+      <li>
+        Páginas visitadas dentro de nuestro Sitio y duración de la visita.
+      </li>
+      <li>
+        Datos recopilados a través de cookies y tecnologías similares (ver
+        sección 6).
+      </li>
+    </ul>
+    <h2>3. Finalidad del Tratamiento de los Datos</h2>
+    <p>
+      Utilizamos la información recopilada para los siguientes fines legítimos
+      de negocio:
+    </p>
+    <ul>
+      <li>
+        <strong>Prestación de Servicios y Atención al Cliente:</strong> Para responder
+        a sus consultas enviadas a través de los formularios de contacto, analizar
+        las necesidades de su proyecto y proporcionarle propuestas de servicios de
+        consultoría, estrategia y desarrollo tecnológico.
+      </li>
+      <li>
+        <strong>Comunicaciones Comerciales:</strong> Con su consentimiento previo
+        y expreso, podremos enviarle información sobre nuestros servicios, actualizaciones,
+        artículos de interés y novedades de Fusion Tower que consideremos relevantes
+        para su negocio. Usted podrá optar por no recibir estas comunicaciones en
+        cualquier momento.
+      </li>
+      <li>
+        <strong>Mejora del Sitio Web:</strong> Para analizar tendencias de uso, administrar
+        el Sitio y mejorar su funcionalidad y seguridad.
+      </li>
+      <li>
+        <strong>Cumplimiento Legal:</strong> Para cumplir con obligaciones legales,
+        regulatorias y fiscales aplicables en Colombia y Estados Unidos.
+      </li>
+    </ul>
+    <h2>4. Base Legal para el Tratamiento</h2>
+    <p>El tratamiento de sus datos personales se basa en:</p>
+    <ol>
+      <li>
+        <strong>Su Consentimiento:</strong> Al enviar sus datos a través de nuestros
+        formularios de contacto, usted otorga su consentimiento libre, previo, expreso
+        e informado para que Fusion Tower trate sus datos conforme a esta política.
+      </li>
+      <li>
+        <strong>Interés Legítimo:</strong> Para garantizar la seguridad de nuestro
+        sitio web y mejorar nuestros servicios B2B (Business-to-Business).
+      </li>
+      <li>
+        <strong>Ejecución de un Contrato:</strong> Si usted contrata nuestros servicios,
+        el tratamiento será necesario para la ejecución de la relación comercial.
+      </li>
+    </ol>
+    <h2>5. Compartir y Transferir Información</h2>
+    <p>
+      Fusion Tower no vende, alquila ni comercializa su información personal con
+      terceros para fines promocionales de dichos terceros.
+    </p>
+    <p>
+      Sin embargo, podemos compartir su información en las siguientes
+      circunstancias limitadas:
+    </p>
+    <ul>
+      <li>
+        <strong>Proveedores de Servicios:</strong> Con terceros de confianza que
+        nos prestan servicios necesarios para operar nuestro negocio (por ejemplo,
+        proveedores de alojamiento web, servicios de correo electrónico, herramientas
+        de gestión de relaciones con clientes - CRM). Estos terceros tienen prohibido
+        utilizar sus datos personales para fines distintos a los contratados y están
+        obligados a mantener la confidencialidad.
+      </li>
+      <li>
+        <strong>Requisitos Legales:</strong> Si estamos obligados a hacerlo por ley
+        o si creemos de buena fe que dicha acción es necesaria para cumplir con un
+        procedimiento judicial, una orden judicial o un proceso legal.
+      </li>
+      <li>
+        <strong>Transferencia Internacional de Datos:</strong> Dado que Fusion Tower
+        opera con clientes y recursos en Colombia y Estados Unidos, su información
+        puede ser transferida, almacenada y procesada en servidores ubicados fuera
+        de su país de residencia. Al proporcionar sus datos, usted consiente esta
+        transferencia internacional. Nos aseguramos de que dichas transferencias
+        se realicen bajo niveles adecuados de protección y seguridad de la información.
+      </li>
+    </ul>
+    <h2>6. Cookies y Tecnologías de Seguimiento</h2>
+    <p>
+      Nuestro Sitio utiliza "cookies" y tecnologías similares para mejorar la
+      experiencia del usuario y analizar el tráfico. Una cookie es un pequeño
+      archivo de texto que se almacena en su dispositivo.
+    </p>
+    <p>
+      Usted puede configurar su navegador para rechazar todas las cookies o para
+      que le indique cuándo se envía una cookie. Sin embargo, si no acepta las
+      cookies, es posible que algunas partes de nuestro Sitio no funcionen
+      correctamente.
+    </p>
+    <h2>7. Seguridad de los Datos</h2>
+    <p>
+      Implementamos medidas de seguridad técnicas, administrativas y físicas
+      razonables y apropiadas para proteger la información personal que
+      recopilamos contra el acceso no autorizado, la divulgación, alteración o
+      destrucción. Sin embargo, tenga en cuenta que ningún método de transmisión
+      por Internet o método de almacenamiento electrónico es 100% seguro.
+    </p>
+    <h2>8. Sus Derechos como Titular de los Datos</h2>
+    <p>
+      De acuerdo con la normativa aplicable (incluyendo el régimen de Habeas
+      Data en Colombia), usted tiene los siguientes derechos respecto a sus
+      datos personales:
+    </p>
+    <ul>
+      <li>
+        <strong>Acceso:</strong> Conocer qué datos personales suyos estamos tratando.
+      </li>
+      <li>
+        <strong>Actualización y Rectificación:</strong> Solicitar la corrección de
+        datos inexactos, incompletos o desactualizados.
+      </li>
+      <li>
+        <strong>Supresión (Cancelación):</strong> Solicitar la eliminación de sus
+        datos personales de nuestras bases de datos cuando no exista un deber legal
+        o contractual de mantenerlos.
+      </li>
+      <li>
+        <strong>Revocatoria del Consentimiento:</strong> Revocar la autorización
+        otorgada para el tratamiento de sus datos.
+      </li>
+      <li>
+        <strong>Oposición:</strong> Oponerse al tratamiento de sus datos para fines
+        específicos.
+      </li>
+    </ul>
+    <p>
+      Para ejercer cualquiera de estos derechos, por favor envíe una solicitud
+      escrita al correo electrónico <a href='mailto:alex@fusiontower.net'
+        >alex@fusiontower.net</a
+      >, detallando su petición e identificándose plenamente.
+    </p>
+    <h2>9. Privacidad de Menores</h2>
+    <p>
+      Nuestro Sitio y nuestros servicios están dirigidos exclusivamente a
+      empresas y profesionales (entorno B2B). No recopilamos conscientemente
+      información personal de menores de 18 años. Si usted es padre o tutor y
+      cree que su hijo nos ha proporcionado información personal, por favor
+      contáctenos para que podamos eliminar dicha información.
+    </p>
+    <h2>10. Cambios a esta Política de Privacidad</h2>
+    <p>
+      Fusion Tower se reserva el derecho de actualizar o modificar esta Política
+      de Privacidad en cualquier momento para reflejar cambios en nuestras
+      prácticas o en la normativa legal. Cualquier cambio será publicado en esta
+      página y la fecha de "Última actualización" en la parte superior será
+      revisada. Le recomendamos revisar esta política periódicamente.
+    </p>
+    <h2>11. Contacto</h2>
+    <p>
+      Si tiene preguntas, inquietudes o comentarios sobre esta Política de
+      Privacidad o sobre cómo manejamos sus datos personales, por favor
+      contáctenos en:
+    </p>
+    <p>
+      <strong>Fusion Tower</strong><br />
+      Correo electrónico: <a href='mailto:alex@fusiontower.net'
+        >alex@fusiontower.net</a
+      >
+    </p>
+  </PrivacyWrapper>
+  <Footer />
+</Layout>
