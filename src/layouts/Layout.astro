@@ -2,7 +2,7 @@
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import { ACCEPTED_LOCALES, DEFAULT_LOCALE } from '@/config/i18n';
-import { withLocale } from '@/helpers/withLocale';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 export type Props = {
   metadata: {
@@ -27,13 +27,6 @@ const pathname = url.pathname;
 const getUrl = (locale: string) =>
   baseOrigin + pathname.replace(`/${currentLang}/`, `/${locale}/`);
 
-const removeLocaleFromPath = (path: string, locale: string) => {
-  const localePrefix = `/${locale}/`;
-  if (path.startsWith(localePrefix)) {
-    return path.slice(localePrefix.length - 1);
-  }
-  return path;
-};
 // Generar paths por idioma
 const hreflangs = ACCEPTED_LOCALES.map((locale) => ({
   locale,
@@ -80,6 +73,7 @@ const hreflangs = ACCEPTED_LOCALES.map((locale) => ({
     <slot />
   </body>
 </html>
+<SpeedInsights />
 
 <style>
   .spotlight {
