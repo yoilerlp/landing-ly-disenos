@@ -12,19 +12,5 @@
   // },
   "compatibility_flags": [
     "nodejs_compat"
-  ],
-  
-  // Rutas y Assets
-  "rules": [
-    {
-      "type": "Text",
-      "globs": ["**/*.html", "**/*.txt"],
-      "fallthrough": false
-    },
-    {
-      "type": "Data",
-      "globs": ["**/*.jpg", "**/*.png", "**/*.gif", "**/*.webp", "**/*.svg", "**/*.ico"],
-      "fallthrough": false
-    }
   ]
 }
