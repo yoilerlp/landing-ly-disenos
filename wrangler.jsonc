@@ -1,0 +1,30 @@
+{
+  // Configuración para Cloudflare Pages
+  "name": "fusion-tower-landing",
+  "compatibility_date": "2025-12-10",
+  
+  // Configuración de Pages
+  "pages_build_output_dir": "./dist",
+  
+  // Variables de entorno (añade las tuyas según necesites)
+  // "vars": {
+  //   "VARIABLE_NAME": "value"
+  // },
+  
+  // Configuración de Node.js
+  "node_compat": true,
+  
+  // Rutas y Assets
+  "rules": [
+    {
+      "type": "Text",
+      "globs": ["**/*.html", "**/*.txt"],
+      "fallthrough": false
+    },
+    {
+      "type": "Data",
+      "globs": ["**/*.jpg", "**/*.png", "**/*.gif", "**/*.webp", "**/*.svg", "**/*.ico"],
+      "fallthrough": false
+    }
+  ]
+}
