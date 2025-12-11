@@ -13,6 +13,8 @@ import {
 
 import sitemap from '@astrojs/sitemap';
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
   vite: {
@@ -33,6 +35,7 @@ export default defineConfig({
     import.meta.env.PUBLIC_SITE_URL ||
     process.env.PUBLIC_SITE_URL ||
     DEFAULT_DOMAIN_URL,
+
   base:
     import.meta.env.PUBLIC_REPOSITORY_PATH ||
     process.env.PUBLIC_REPOSITORY_PATH ||
@@ -52,5 +55,11 @@ export default defineConfig({
       }),
     },
   },
+
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
 });
 
