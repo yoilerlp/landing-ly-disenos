@@ -12,9 +12,7 @@
   // },
   "compatibility_flags": [
     "nodejs_compat"
-  ],  
-  // Configuración de Node.js
-  "node_compat": true,
+  ],
   
   // Rutas y Assets
   "rules": [
