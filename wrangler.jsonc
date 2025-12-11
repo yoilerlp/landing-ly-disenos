@@ -5,12 +5,7 @@
   
   // Configuración de Pages
   "pages_build_output_dir": "./dist",
-  
-  // Variables de entorno (añade las tuyas según necesites)
-  // "vars": {
-  //   "VARIABLE_NAME": "value"
-  // },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  "assets": {
+    "directory": "./dist"
+  }
 }
