@@ -83,135 +83,137 @@ const { serviceData, serviceImages, serviceIcons } =
 <script>
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
   gsap.registerPlugin(ScrollTrigger);
 
-  const ourServices = document.querySelector('#our-services') as HTMLElement;
-  const section = document.querySelector('#service-cards-list') as HTMLElement;
+  const runAnimationLogic = () => {
 
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const ourServices = document.querySelector('#our-services') as HTMLElement;
+    const section = document.querySelector(
+      '#service-cards-list'
+    ) as HTMLElement;
 
-  const serviceTitleClass = [
-    'text-secondary',
-    'text-blue-dark',
-    'text-green-light',
-  ];
-  const categories = document.querySelectorAll(
-    '#list-category .service-category-item'
-  );
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-  function setActiveCategory(index: number) {
-    categories.forEach((li, i) => {
-      if (i === index) {
-        li.classList.add('active');
-        // Cambiar color título
-        const serviceTitle = document.querySelector('#services-title');
-        if (serviceTitle) {
-          serviceTitle.className = `mb-7 xl:mb-16 font-normal ${serviceTitleClass[i]} text-5xl`;
+    const serviceTitleClass = [
+      'text-secondary',
+      'text-blue-dark',
+      'text-green-light',
+    ];
+    const categories = document.querySelectorAll(
+      '#list-category .service-category-item'
+    );
+
+    function setActiveCategory(index: number) {
+      categories.forEach((li, i) => {
+        if (i === index) {
+          li.classList.add('active');
+          // Cambiar color título
+          const serviceTitle = document.querySelector('#services-title');
+          if (serviceTitle) {
+            serviceTitle.className = `mb-7 xl:mb-16 font-normal ${serviceTitleClass[i]} text-5xl`;
+          }
+        } else {
+          li.classList.remove('active');
         }
-      } else {
-        li.classList.remove('active');
-      }
-    });
-  }
-
-  setActiveCategory(0);
-
-  // set active class for first category on load
-
-  function init() {
-    if (isMobile) return;
-
-    const sectionId = '#our-services';
-    const scrollContainer = document.querySelector('#service-cards-list');
-
-    const groups = gsap.utils.toArray('.service-category-group');
-    const cardEstimatedHeight = 300;
-
-    if (scrollContainer) {
-      gsap.to(scrollContainer, {
-        y: () => -(scrollContainer.scrollHeight - cardEstimatedHeight * 2),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionId,
-          start: 'top 100px',
-          // end: 'bottom center',
-          end: () =>
-            `+=${scrollContainer.scrollHeight - cardEstimatedHeight * 2}`,
-          scrub: 0.5,
-          pin: true,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      // Activar categoría según scroll
-      groups.forEach((group: any, i) => {
-        ScrollTrigger.create({
-          trigger: group,
-          start: 'top center',
-          end: 'bottom center',
-          onEnter: () => setActiveCategory(i),
-          onEnterBack: () => setActiveCategory(i),
-        });
       });
     }
-  }
 
-  function initMobileScroll() {
-    const groups = gsap.utils.toArray<HTMLElement>('.service-category-group');
-    const lastGroup = groups[groups.length - 1];
+    setActiveCategory(0);
 
-    gsap.to(section, {
-      y: () => -(section.scrollHeight - window.innerHeight + 100),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: ourServices,
-        start: `top top`,
-        // El final es cuando el último grupo está visible en un 70% de la pantalla
-        end: () => {
-          // Posición del último grupo en el contenedor
-          const lastGroupTop = lastGroup.offsetTop;
-          // Para que esté al 70% visible, su top debe estar a -30% del alto de la pantalla
-          const endPosition = lastGroupTop - window.innerHeight * 0.3;
-          return `+=${endPosition}`;
-        },
-        scrub: 1,
-        pin: true,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          // En cada frame de la animación, encontramos cuál grupo está más cerca del top
-          let closestGroupIndex = 0;
-          let closestDistance = Infinity;
+    function init() {
+      if (isMobile) return;
 
-          groups.forEach((group, i) => {
-            // La posición del grupo relativa al contenedor (teniendo en cuenta la animación y)
-            const sectionY = gsap.getProperty(section, 'y') as number;
-            const groupYInContainer = group.offsetTop + sectionY;
+      const sectionId = '#our-services';
+      const scrollContainer = document.querySelector('#service-cards-list');
 
-            // Calculamos la distancia al top (posición 0)
-            const distance = Math.abs(groupYInContainer);
+      const groups = gsap.utils.toArray('.service-category-group');
+      const cardEstimatedHeight = 300;
 
-            // Si esta es la distancia más pequeña encontrada, actualiza el más cercano
-            if (distance < closestDistance) {
-              closestDistance = distance;
-              closestGroupIndex = i;
-            }
+      if (scrollContainer) {
+        gsap.to(scrollContainer, {
+          y: () => -(scrollContainer.scrollHeight - cardEstimatedHeight * 2),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionId,
+            start: 'top 100px',
+            // end: 'bottom center',
+            end: () =>
+              `+=${scrollContainer.scrollHeight - cardEstimatedHeight * 2}`,
+            scrub: 0.5,
+            pin: true,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // Activar categoría según scroll
+        groups.forEach((group: any, i) => {
+          ScrollTrigger.create({
+            trigger: group,
+            start: 'top center',
+            end: 'bottom center',
+            onEnter: () => setActiveCategory(i),
+            onEnterBack: () => setActiveCategory(i),
           });
+        });
+      }
+    }
 
-          // Marca como activo el grupo más cercano al top
-          setActiveCategory(closestGroupIndex);
+    function initMobileScroll() {
+      const groups = gsap.utils.toArray<HTMLElement>('.service-category-group');
+      const lastGroup = groups[groups.length - 1];
+
+      if (!section) return;
+
+      gsap.to(section, {
+        y: () => -(section.scrollHeight - window.innerHeight + 100),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: ourServices,
+          start: `top top`,
+          // El final es cuando el último grupo está visible en un 70% de la pantalla
+          end: () => {
+            // Posición del último grupo en el contenedor
+            const lastGroupTop = lastGroup.offsetTop;
+            // Para que esté al 70% visible, su top debe estar a -30% del alto de la pantalla
+            const endPosition = lastGroupTop - window.innerHeight * 0.3;
+            return `+=${endPosition}`;
+          },
+          scrub: 1,
+          pin: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            // En cada frame de la animación, encontramos cuál grupo está más cerca del top
+            let closestGroupIndex = 0;
+            let closestDistance = Infinity;
+
+            groups.forEach((group, i) => {
+              // La posición del grupo relativa al contenedor (teniendo en cuenta la animación y)
+              const sectionY = gsap.getProperty(section, 'y') as number;
+              const groupYInContainer = group.offsetTop + sectionY;
+
+              // Calculamos la distancia al top (posición 0)
+              const distance = Math.abs(groupYInContainer);
+
+              // Si esta es la distancia más pequeña encontrada, actualiza el más cercano
+              if (distance < closestDistance) {
+                closestDistance = distance;
+                closestGroupIndex = i;
+              }
+            });
+
+            // Marca como activo el grupo más cercano al top
+            setActiveCategory(closestGroupIndex);
+          },
         },
-      },
-    });
-  }
+      });
+    }
 
-  function runAnimation() {
     if (!isMobile) init();
     else initMobileScroll();
-  }
+  };
 
-  runAnimation();
-  document.addEventListener('astro:after-swap', runAnimation);
+  runAnimationLogic();
+  document.addEventListener('astro:after-swap', runAnimationLogic);
 </script>
 
 <style>

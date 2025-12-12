@@ -100,7 +100,8 @@ const workFlowStepsGrouped = groupBy(workFlowSteps, 2);
     if (section && container) {
       const totalScrollWidth = container.scrollWidth;
       const viewportWidth = window.innerWidth;
-      const scrollDistance = totalScrollWidth - viewportWidth + 300;
+      const aditionalDistance = isMobile ? 40 : 300;
+      const scrollDistance = totalScrollWidth - viewportWidth + aditionalDistance;
 
       gsap.to(container, {
         x: -scrollDistance,

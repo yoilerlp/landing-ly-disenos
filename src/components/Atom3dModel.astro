@@ -41,6 +41,8 @@
     const IDLE_TIME_MS = 10000; // 10 segundos en milisegundos
     const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
 
+    if(!canvas) return;
+
     scene = new THREE.Scene();
 
     const aspect = canvas.clientWidth / canvas.clientHeight;
@@ -191,7 +193,9 @@
       const canvas = document.getElementById(
         'hero-canvas'
       ) as HTMLCanvasElement;
-      if (!renderer || !camera) return;
+
+
+      if (!renderer || !camera || !canvas) return;
 
       renderer.setSize(canvas.clientWidth, canvas.clientHeight);
       camera.aspect = canvas.clientWidth / canvas.clientHeight;

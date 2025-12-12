@@ -89,12 +89,18 @@ const currentLocale = Astro.currentLocale || DEFAULT_LOCALE;
 <script>
   import { openModalGame } from '@/helpers/game';
 
-  const btnOpenGame = document.getElementById(
-    'showMeButton'
-  ) as HTMLButtonElement;
-  if (btnOpenGame) {
-    btnOpenGame.addEventListener('click', () => {
-      openModalGame();
-    });
-  }
+  const setupOpenGameLogic = () => {
+    const btnOpenGame = document.getElementById(
+      'showMeButton'
+    ) as HTMLButtonElement;
+    if (btnOpenGame) {
+      btnOpenGame.addEventListener('click', () => {
+        openModalGame();
+      });
+    }
+  };
+
+  setupOpenGameLogic();
+
+  document.addEventListener('astro:after-swap', setupOpenGameLogic);
 </script>
