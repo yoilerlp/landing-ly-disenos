@@ -34,14 +34,17 @@ const hreflangs = ACCEPTED_LOCALES.map((locale) => ({
 }));
 ---
 
-<html lang={metadata.lang}>
+<html translate='no' lang={metadata.lang}>
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width' />
-    <link rel='icon' type='image/svg+xml' href='/favicon.ico' />
+    <link rel='icon' type='image/x-icon' href='/favicon.ico' />
     <meta name='generator' content={Astro.generator} />
     <title>{metadata.title}</title>
     <meta name='description' content={metadata.description} />
+    <meta name='google' content='notranslate' />
+    <meta name='robots' content='index, follow' />
+
     {metadata.keywords && <meta name='keywords' content={metadata.keywords} />}
     {metadata.author && <meta name='author' content={metadata.author} />}
     {
@@ -62,6 +65,16 @@ const hreflangs = ACCEPTED_LOCALES.map((locale) => ({
     }
 
     <link rel='alternate' hreflang='x-default' href={getUrl(DEFAULT_LOCALE)} />
+
+    <script type='application/ld+json'>
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Fusion Tower",
+        "url": "https://www.fusiontower.net/",
+        "logo": "https://www.fusiontower.net/Miniatura.png",
+      }
+    </script>
 
     <!-- Social media -->
 
